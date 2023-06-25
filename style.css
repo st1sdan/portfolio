@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    background: #594d51;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: whitesmoke;
+}
+
+header{
+    text-align: center;
+    background: #423b41;
+    color: white;
+    flex-grow: 100;
+    margin: 0;
+    font-size: 35px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-section {
+    flex-basis: 50%;
+    position: relative;
+}
+
+.header-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.header-section a {
+    background: #423b41;
+    display: block;
+    position: relative;
+    z-index: 2;
+    color: #7d6a6e;
+    transition: 0.2s all;
+    margin-left: 0.6%;
+    margin-right: 0.6%;
+    flex-basis: 50%;
+    position: relative;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.header-section:hover a {
+    background: #7d6a6e;
+    color: #ae9998;
+    box-shadow: -1px 2px #ebd5ce;
+}
+
+main {
+    margin-top: 10px;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+.main-container {
+    text-align: center;
+}
+
+.image-container {
+    display: inline-block;
+    position: relative;
+}
+
+.image-container img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.image-container .caption {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+}
+
+footer {
+    background-color: #423b41;
+    margin-top: 100%;
+    text-align: center;
+}
