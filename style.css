@@ -9,7 +9,7 @@ header{
     text-align: center;
     background: #423b41;
     color: white;
-    flex-grow: 100;
+    flex-grow: 1;
     margin: 0;
     font-size: 35px;
 }
@@ -41,8 +41,8 @@ header{
     z-index: 2;
     color: #7d6a6e;
     transition: 0.2s all;
-    margin-left: 0.6%;
-    margin-right: 0.6%;
+    /* margin-left: 0.6%;
+    margin-right: 0.6%; */
     flex-basis: 50%;
     position: relative;
     text-decoration: none;
@@ -86,6 +86,10 @@ main {
     font-size: 14px;
     background-color: rgba(0, 0, 0, 0.7);
     padding: 5px;
+}
+
+h1 {
+    text-align: center;
 }
 
 footer {
