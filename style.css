@@ -16,7 +16,7 @@ body::before {
     top: 0; left: 0;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle at 20% 40%, #ae81ff22 0%, transparent 40%),
+    background: radial-gradient(circle at 20% 40%, #ad81ff11 0%, transparent 40%),
                 radial-gradient(circle at 80% 60%, #9c4dff11 0%, transparent 50%);
     animation: floatLights 60s linear infinite;
     z-index: -1;
