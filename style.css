@@ -5,6 +5,30 @@
     font-family: 'Fira Sans', sans-serif;
 }
 
+.hero h1, .hero p {
+    will-change: transform;
+    transition: transform 0.1s ease-out;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 20% 40%, #ae81ff22 0%, transparent 40%),
+                radial-gradient(circle at 80% 60%, #9c4dff11 0%, transparent 50%);
+    animation: floatLights 60s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes floatLights {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-25%, -15%); }
+}
+
+
 :root {
     --primary-color: hsl(218, 12%, 18%);
     --secondary-color: hsl(218, 12%, 24%);
@@ -12,6 +36,15 @@
     --accent-color: #ae81ff;
     --accent-hover: #9c6dff;
     --muted-color: hsl(218, 10%, 50%);
+}
+
+:root[data-theme="light"] {
+    --primary-color: #f8f8f8;
+    --secondary-color: #e0e0e0;
+    --text-color: #272822;
+    --accent-color: #9c4dff;
+    --accent-hover: #7b2cff;
+    --muted-color: #757575;
 }
 
 body {
@@ -81,7 +114,7 @@ header {
 }
 
 .logo:hover svg.star {
-  filter: drop-shadow(0 0 8px rgba(174, 129, 255, 0.8));
+filter: drop-shadow(0 0 8px rgba(174, 129, 255, 0.8));
 }
 
 
@@ -113,7 +146,7 @@ nav ul li a:hover {
 }
 
 .sharp {
-  color: #ae81ff;
+color: #ae81ff;
 }
 
 .language-switcher {
@@ -438,7 +471,7 @@ footer {
 }
 
 @media (max-width: 768px) {
-      header {
+    header {
         flex-direction: column;
         align-items: center;
     }
@@ -513,39 +546,148 @@ footer {
 }
 
 .hero {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 .particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    will-change: transform;
+    transition: transform 0.1s ease-out;
 }
 
 .particle {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  background-color: rgba(174, 129, 255, 0.5);
-  border-radius: 50%;
-  animation: float 15s infinite ease-in-out;
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background-color: rgba(174, 129, 255, 0.5);
+    border-radius: 50%;
+    animation: float 15s infinite ease-in-out;
 }
 
 @keyframes float {
-  0%, 100% {
+0%, 100% {
     transform: translate(0, 0);
-  }
-  25% {
+}
+25% {
     transform: translate(20px, 20px);
-  }
-  50% {
+}
+50% {
     transform: translate(10px, -10px);
-  }
-  75% {
+}
+75% {
     transform: translate(-10px, 10px);
-  }
+}
+}
+
+
+/* .theme-toggle {
+    cursor: pointer;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    padding: 0;
+    color: var(--text-color);
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+.theme-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+} */
+/* 
+.theme-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-color);
+    z-index: 9999;
+    clip-path: circle(0% at 50% 50%);
+    opacity: 0;
+    transition: clip-path 1.2s ease-in-out, opacity 0.6s ease;
+    pointer-events: none;
+} */
+.theme-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-color);
+    z-index: 9999;
+    clip-path: circle(0% at 50% 50%);
+    transition: none;
+    opacity: 0;
+    pointer-events: none;
+    mix-blend-mode: normal;
+}
+
+.theme-toggle {
+    cursor: pointer;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    padding: 0;
+    color: var(--text-color);
+    position: relative;
+    z-index: 10000;
+}
+
+.theme-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+    transform: scale(1.2);
+}
+
+/* Иконки темы */
+.moon-icon {
+    display: block;
+}
+.sun-icon {
+    display: none;
+}
+
+[data-theme="light"] .moon-icon {
+    display: none;
+}
+[data-theme="light"] .sun-icon {
+    display: block;
+}
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
 }

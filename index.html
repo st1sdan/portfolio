@@ -9,6 +9,7 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+    <div class="theme-overlay" id="themeOverlay"></div>
     <div class="container">
         <header>
             <div class="logo">
@@ -30,6 +31,15 @@
                             <a href="#" data-lang="ru">RU</a>
                         </div>
                     </li>
+                    <li>
+                        <button class="theme-toggle" aria-label="Toggle theme">
+                            <svg class="theme-icon" viewBox="0 0 24 24">
+                                <!-- Иконка луны (темная тема) -->
+                                <path class="moon-icon" fill="currentColor" d="M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/>
+                                <!-- Иконка солнца (светлая тема) - скрыта по умолчанию -->
+                                <path class="sun-icon" fill="currentColor" d="M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7L12,7z M12,2L12,2L12,2L12,2L12,2z M12,22L12,22L12,22L12,22L12,22z M5.64,7.05L5.64,7.05L5.64,7.05L5.64,7.05L5.64,7.05z M18.36,17L18.36,17L18.36,17L18.36,17L18.36,17z M2,12L2,12L2,12L2,12L2,12z M22,12L22,12L22,12L22,12L22,12z M5.64,16.95L5.64,16.95L5.64,16.95L5.64,16.95L5.64,16.95z M18.36,7.05L18.36,7.05L18.36,7.05L18.36,7.05L18.36,7.05z" style="display: none;"/></svg>
+                        </button>
+                    </li>
                 </ul>
             </nav>
         </header>
@@ -43,7 +53,7 @@
         </section>
 
         <section id="projects">
-            <h2 class="section-title translate" data-key="projects"><span class="sharp">#</span>Projects</h2>
+            <h2 class="section-title translate fade-in-up" data-key="projects"><span class="sharp">#</span>Projects</h2>
             <div class="projects-grid">
 
                 <div class="project-card">
@@ -79,8 +89,8 @@
                 <div class="project-card">
                     <div class="project-img"><img alt="Ad" src="Images/Ad.png"></div>
                     <div class="project-info">
-                        <h3 class="translate" data-key="project3_title">Ad for academy</h3>
-                        <p class="translate" data-key="project3_desc" style="
+                        <h3 class="translate" data-key="project4_title">Ad for academy</h3>
+                        <p class="translate" data-key="project4_desc" style="
     margin-bottom: 20px;">Test project for academy.</p>
                         <a href="https://www.figma.com/design/cthCmVD9SykCXtilb2e4WN/Ad?node-id=0-1&t=XGOaR5btycjFRBik-1" target="_blank" class="project-link translate" data-key="view_project">View project</a>
                     </div>
@@ -89,8 +99,8 @@
                 <div class="project-card">
                     <div class="project-img"><img alt="Ad" src="Images/Presentation.png"></div>
                     <div class="project-info">
-                        <h3 class="translate" data-key="project3_title">Presentation for Alpha Bank</h3>
-                        <p class="translate" data-key="project3_desc" style="
+                        <h3 class="translate" data-key="project5_title">Presentation for Alpha Bank</h3>
+                        <p class="translate" data-key="project5_desc" style="
     margin-bottom: 20px;">Idea presentation for Alpha Bank case presentation.</p>
                         <a href="https://www.figma.com/design/PlCpfvd9NEQkyfmViulISV/Presentation?node-id=1-445&t=0D0rx5asTXFerC1z-1" target="_blank" class="project-link translate" data-key="view_project">View project</a>
                     </div>
@@ -99,7 +109,7 @@
         </section>
 
         <section id="process">
-            <h2 class="section-title translate" data-key="process"><span class="sharp">#</span>Process</h2>
+            <h2 class="section-title translate fade-in-up" data-key="process"><span class="sharp">#</span>Process</h2>
             <div class="process-steps">
                 <div class="process-step">
                     <div class="process-header">
@@ -151,7 +161,7 @@
             </div>
         </section>
 
-        <section id="contacts">
+        <section id="contacts fade-in-up">
             <h2 class="section-title translate" data-key="contacts"><span class="sharp">#</span>Contacts</h2>
             <div class="contacts-container">
                 <div class="contacts-text">
