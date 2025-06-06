@@ -147,36 +147,36 @@ function translatePage(lang) {
     });
 }
 
-// Particles
-for (let i = 0; i < 60; i++) {
-const particle = document.createElement('div');
-particle.classList.add('particle');
+// // Particles
+// for (let i = 0; i < 60; i++) {
+// const particle = document.createElement('div');
+// particle.classList.add('particle');
 
-// Случайное начальное положение
-particle.style.left = `${Math.random() * 100}%`;
-particle.style.top = `${Math.random() * 100}%`;
+// // Случайное начальное положение
+// particle.style.left = `${Math.random() * 100}%`;
+// particle.style.top = `${Math.random() * 100}%`;
 
-// Случайная задержка анимации
-particle.style.animationDelay = `${Math.random() * 5}s`;
+// // Случайная задержка анимации
+// particle.style.animationDelay = `${Math.random() * 5}s`;
 
-// Случайный размер
-const size = 2 + Math.random() * 3;
-particle.style.width = `${size}px`;
-particle.style.height = `${size}px`;
+// // Случайный размер
+// const size = 2 + Math.random() * 3;
+// particle.style.width = `${size}px`;
+// particle.style.height = `${size}px`;
 
-// Случайная прозрачность
-particle.style.opacity = 0.3 + Math.random() * 0.7;
+// // Случайная прозрачность
+// particle.style.opacity = 0.3 + Math.random() * 0.7;
 
-document.getElementById('particles').appendChild(particle);
-}
+// document.getElementById('particles').appendChild(particle);
+// }
 
-// Particles parallax
-window.addEventListener('scroll', () => {
-    const particles = document.getElementById('particles');
-    if (particles) {
-        particles.style.transform = `translateY(${window.scrollY * 0.2}px)`;
-    }
-});
+// // Particles parallax
+// window.addEventListener('scroll', () => {
+//     const particles = document.getElementById('particles');
+//     if (particles) {
+//         particles.style.transform = `translateY(${window.scrollY * 0.2}px)`;
+//     }
+// });
 
 // Theme toggle with ripple effect
 const themeToggle = document.querySelector('.theme-toggle');
@@ -260,3 +260,45 @@ const observer = new IntersectionObserver((entries) => {
 });
 
 document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+// import * as THREE from 'https://cdn.skypack.dev/three@0.152.2';
+
+// создаём сцену
+const canvas = document.getElementById('bgScene');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
+camera.position.z = 5;
+
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+
+window.addEventListener('resize', () => {
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+});
+
+const stars = new THREE.Group();
+scene.add(stars);
+
+const geometry = new THREE.SphereGeometry(0.02, 12, 12);
+const material = new THREE.MeshBasicMaterial({ color: 0xae81ff });
+
+for (let i = 0; i < 500; i++) {
+    const star = new THREE.Mesh(geometry, material);
+    star.position.set(
+        (Math.random() - 0.5) * 50,
+        (Math.random() - 0.5) * 50,
+        (Math.random() - 0.5) * 50
+    );
+    stars.add(star);
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    stars.rotation.y += 0.0002;
+    stars.rotation.x += 0.0001;
+    renderer.render(scene, camera);
+}
+animate();

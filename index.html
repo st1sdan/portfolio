@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200;250;300&display=swap" rel="stylesheet">
     <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
 </head>
 <body>
+    <canvas id="bgScene" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;"></canvas>
     <div class="theme-overlay" id="themeOverlay"></div>
     <div class="container">
         <header>
-            <div class="logo">
+            <div class="logo pulse-glow">
                 <a href="#" style="text-decoration: none; color: inherit;">stisdan</a>
                 <svg class="star" viewBox="0 0 24 24">
                     <path fill="#ae81ff" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
@@ -46,7 +48,7 @@
 
         <section id="home" class="hero">
             <div class="hero">
-            <div class="particles" id="particles"></div>
+            <!-- <div class="particles" id="particles"></div> -->
             <h1 class="translate" data-key="title">Web Designer And Developer</h1>
             <p class="translate" data-key="subtitle">I create beautiful, functional websites that help businesses grow</p>
             <a href="#contacts" class="contact-btn translate" data-key="contact_btn">Contact Me</a>
