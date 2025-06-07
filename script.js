@@ -112,23 +112,32 @@ const translations = {
     }
 };
 
+const currentLang = localStorage.getItem('lang') || 'ru';
+translatePage(currentLang);
+document.querySelector('.current-lang').textContent = currentLang.toUpperCase();
+
+// Подсветка активного языка
+languageLinks.forEach(link => {
+    const lang = link.getAttribute('data-lang');
+    link.classList.toggle('selected', lang === currentLang);
+});
+
 languageLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         const lang = link.getAttribute('data-lang');
+
+        // Сохраняем
+        localStorage.setItem('lang', lang);
         translatePage(lang);
         languageSwitcher.querySelector('.current-lang').textContent = lang.toUpperCase();
-        
-        // Update selected language in dropdown
+
         languageLinks.forEach(l => {
-            if (l.getAttribute('data-lang') === lang) {
-                l.classList.add('selected');
-            } else {
-                l.classList.remove('selected');
-            }
+            l.classList.toggle('selected', l.getAttribute('data-lang') === lang);
         });
     });
 });
+
 
 function translatePage(lang) {
     const elements = document.querySelectorAll('.translate');
