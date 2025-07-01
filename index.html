@@ -52,7 +52,7 @@
 
         :root {
             --primary-color: hsl(218, 12%, 18%);
-            --secondary-color: hsl(218, 12%, 24%);
+            --secondary-color: hsl(218, 12%, 24%, 20%);
             --text-color: hsl(0, 0%, 93%);
             --accent-color: #ae81ff;
             --accent-hover: #9c6dff;
@@ -303,8 +303,9 @@
         .project-card {
             position: relative;
             background: var(--secondary-color);
+            backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
+            border-radius: 20px;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow:
@@ -401,9 +402,9 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(2px);
             padding: 0.5rem 1rem;
-            border-radius: 50px;
+            border-radius: 10px;
             font-size: 0.85rem;
             font-weight: 600;
             color: white;
@@ -480,7 +481,7 @@
 
         .badge {
             padding: 0.25rem 0.75rem;
-            border-radius: 50px;
+            border-radius: 10px;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -547,7 +548,7 @@
             background: var(--accent-color);
             color: white;
             text-decoration: none;
-            border-radius: 50px;
+            border-radius: 10px;
             font-weight: 600;
             font-size: 0.9rem;
             position: relative;
@@ -681,6 +682,7 @@
         }
 
         .process-step {
+            backdrop-filter: blur(2px);
             background-color: var(--secondary-color);
             border-radius: 2px;
             margin-bottom: 20px;
@@ -743,8 +745,8 @@
         .highlight-item {
             text-align: center;
             padding: 20px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            background: var(--secondary-color);
+            backdrop-filter: blur(2px);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             transition: all 0.3s ease;
@@ -856,10 +858,10 @@
         }
 
         .skill-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            background: var(--secondary-color);
+            backdrop-filter: blur(2px);
             border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            border-radius: 20px;
             padding: 20px;
             text-align: center;
             transition: all 0.3s ease;
@@ -1654,7 +1656,7 @@
                                 </span>
                                 <span class="stat-item price">
                                     <i class="fas fa-ruble-sign"></i>
-                                    <span>45 000</span>
+                                    <span>₽45 000</span>
                                 </span>
                             </div>
                         </div>
@@ -1696,11 +1698,11 @@
                             <div class="project-stats">
                                 <span class="stat-item time">
                                     <i class="fas fa-clock"></i>
-                                    <span>3-5 дней</span>
+                                    <span>8 часов</span>
                                 </span>
                                 <span class="stat-item price">
                                     <i class="fas fa-ruble-sign"></i>
-                                    <span>15 000</span>
+                                    <span>₽1 000/шт</span>
                                 </span>
                             </div>
                         </div>
@@ -1720,7 +1722,7 @@
                         <div class="project-details">
                             <div class="detail-item">
                                 <span class="detail-label">Инструменты:</span>
-                                <span class="detail-value">Figma, Adobe XD</span>
+                                <span class="detail-value">Figma, Photoshop, Blender</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Тип:</span>
@@ -1747,7 +1749,7 @@
                                 </span>
                                 <span class="stat-item price">
                                     <i class="fas fa-ruble-sign"></i>
-                                    <span>15 000</span>
+                                    <span>₽10 000</span>
                                 </span>
                             </div>
                         </div>
@@ -1790,11 +1792,11 @@
                             <div class="project-stats">
                                 <span class="stat-item time">
                                     <i class="fas fa-clock"></i>
-                                    <span>1-2 недели</span>
+                                    <span>2-3 недели</span>
                                 </span>
                                 <span class="stat-item price">
                                     <i class="fas fa-ruble-sign"></i>
-                                    <span>30 000</span>
+                                    <span>Бесценно</span>
                                 </span>
                             </div>
                         </div>
@@ -1814,7 +1816,7 @@
                         <div class="project-details">
                             <div class="detail-item">
                                 <span class="detail-label">Технологии:</span>
-                                <span class="detail-value">HTML5, CSS3, JavaScript</span>
+                                <span class="detail-value">HTML5, CSS3, JavaScript, Three.js</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Тип:</span>
@@ -1840,7 +1842,7 @@
                                 </span>
                                 <span class="stat-item price">
                                     <i class="fas fa-ruble-sign"></i>
-                                    <span>8 000</span>
+                                    <span>₽5 000</span>
                                 </span>
                             </div>
                         </div>
@@ -1883,11 +1885,11 @@
                             <div class="project-stats">
                                 <span class="stat-item time">
                                     <i class="fas fa-clock"></i>
-                                    <span>1 неделя</span>
+                                    <span>2 дня</span>
                                 </span>
                                 <span class="stat-item price">
                                     <i class="fas fa-ruble-sign"></i>
-                                    <span>20 000</span>
+                                    <span>₽20 000</span>
                                 </span>
                             </div>
                         </div>
@@ -1907,7 +1909,7 @@
                         <div class="project-details">
                             <div class="detail-item">
                                 <span class="detail-label">Инструменты:</span>
-                                <span class="detail-value">Figma, Keynote</span>
+                                <span class="detail-value">Figma</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Тип:</span>
