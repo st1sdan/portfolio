@@ -1,0 +1,2357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Портфолио веб-дизайнера Stisdan: создание современных сайтов для бизнеса">
+    <meta name="keywords" content="веб-дизайн, разработка сайтов, UX/UI">
+    <title>Stisdan</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200;250;300&display=swap" rel="stylesheet">
+    <!-- <script src="script.js" defer></script> -->
+    <script src="three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fira Sans', sans-serif;
+        }
+
+        .hero h1,
+        .hero p {
+            will-change: transform;
+            transition: transform 0.1s ease-out;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 40%, #ad81ff11 0%, transparent 40%),
+                radial-gradient(circle at 80% 60%, #9c4dff11 0%, transparent 50%);
+            animation: floatLights 60s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes floatLights {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-25%, -15%);
+            }
+        }
+
+
+        :root {
+            --primary-color: hsl(218, 12%, 18%);
+            --secondary-color: hsl(218, 12%, 24%);
+            --text-color: hsl(0, 0%, 93%);
+            --accent-color: #ae81ff;
+            --accent-hover: #9c6dff;
+            --muted-color: hsl(218, 10%, 50%);
+        }
+
+        :root[data-theme="light"] {
+            --primary-color: #f8f8f8;
+            --secondary-color: #e0e0e0;
+            --text-color: #272822;
+            --accent-color: #9c4dff;
+            --accent-hover: #7b2cff;
+            --muted-color: #757575;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 80px;
+            /* Добавлено для компенсации фиксированного header */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+            color: var(--text-color);
+            padding-left: 40px;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .logo svg.star {
+            position: absolute;
+            left: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover svg.star {
+            filter: drop-shadow(0 0 8px rgba(174, 129, 255, 0.8));
+        }
+
+
+        nav {
+            align-content: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            text-transform: lowercase;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .sharp {
+            color: #ae81ff;
+        }
+
+        .language-switcher {
+            cursor: pointer;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+            padding: 10px;
+            display: none;
+            min-width: 60px;
+            z-index: 10;
+        }
+
+        .language-dropdown.active {
+            display: block;
+        }
+
+        .language-dropdown a {
+            display: block;
+            padding: 5px 10px;
+            color: var(--text-color);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .language-dropdown a:hover {
+            color: var(--accent-color);
+            background-color: hsl(218, 12%, 22%);
+        }
+
+        .language-dropdown a.selected {
+            color: var(--accent-color);
+            pointer-events: none;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 30px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .contact-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .contact-btn:hover:before {
+            left: 100%;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(174, 129, 255, 0.4);
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            margin-bottom: 50px;
+            font-size: 2rem;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            position: relative;
+            text-transform: capitalize;
+        }
+
+        .section-title:after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--accent-color);
+            margin-left: 20px;
+            width: calc(100% - 200px);
+            max-width: none;
+        }
+
+        /* Основные стили секции проектов */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Современные карточки проектов */
+        .project-card {
+            position: relative;
+            background: var(--secondary-color);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow:
+                0 4px 30px rgba(0, 0, 0, 0.2),
+                0 1px 3px rgba(0, 0, 0, 0.1);
+
+            /* Высота карточки фиксированная для выравнивания */
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg,
+                    transparent 0%,
+                    var(--accent-color) 50%,
+                    transparent 100%);
+            border-radius: 26px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-card:hover::before {
+            opacity: 0.3;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                0 8px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        /* Изображения проектов */
+        .project-img {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+            flex-shrink: 0;
+        }
+
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: brightness(0.9);
+        }
+
+        .project-card:hover .project-img img {
+            transform: scale(1.1);
+            filter: brightness(1);
+        }
+
+        /* Overlay для статистики */
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                    rgba(0, 0, 0, 0.8) 0%,
+                    rgba(0, 0, 0, 0.4) 50%,
+                    transparent 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        /* Статистика проекта */
+        .project-stats {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(20px);
+            animation: slideUpFadeIn 0.5s ease forwards;
+        }
+
+        .stat-item.time {
+            background: rgba(74, 222, 128, 0.9);
+            /* Зеленый фон */
+            animation-delay: 0.1s;
+        }
+
+        .stat-item.price {
+            background: rgba(245, 158, 11, 0.9);
+            /* Оранжевый фон */
+            animation-delay: 0.2s;
+        }
+
+        .stat-item i {
+            font-size: 0.8rem;
+        }
+
+        @keyframes slideUpFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Информация о проекте - КЛЮЧЕВОЕ ИЗМЕНЕНИЕ */
+        .project-info {
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* Разделяем контент и кнопку */
+        }
+
+        .project-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .project-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .project-info h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        /* Бейджи */
+        .project-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .badge-design {
+            background: var(--time-color);
+            color: white;
+        }
+
+        .badge-secondary {
+            background: var(--muted-color);
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* Описание проекта */
+        .project-info p {
+            color: var(--text-color);
+            opacity: 0.8;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Детали проекта */
+        .project-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .detail-label {
+            color: var(--text-color);
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        /* Ссылка на проект - ЗАФИКСИРОВАНА ВНИЗУ */
+        .project-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            /* Отступ сверху */
+            flex-shrink: 0;
+            /* Не сжимается */
+        }
+
+        .project-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-hover);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .project-link:hover::before {
+            left: 0;
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(174, 129, 255, 0.3);
+        }
+
+        .project-link i {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .project-link:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .project-card {
+                min-height: auto;
+            }
+
+            .project-info {
+                padding: 1.5rem;
+            }
+
+            .project-header {
+                gap: 0.5rem;
+            }
+
+            .project-badges {
+                gap: 0.25rem;
+            }
+        }
+
+        /* Анимация появления карточек */
+        .project-card {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .project-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .project-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .project-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .project-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .project-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .project-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Дополнительные стили для светлой темы */
+        :root[data-theme="light"] .project-card {
+            box-shadow:
+                0 4px 30px rgba(0, 0, 0, 0.1),
+                0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        :root[data-theme="light"] .project-card:hover {
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.15),
+                0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        :root[data-theme="light"] .stat-item.time {
+            background: rgba(5, 150, 105, 0.9);
+        }
+
+        :root[data-theme="light"] .stat-item.price {
+            background: rgba(217, 119, 6, 0.9);
+        }
+
+        .process-steps {
+            max-width: 100%;
+        }
+
+        .process-step {
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .process-header {
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .process-header h3 {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            text-transform: capitalize;
+        }
+
+        .process-content {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+
+        .process-content p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* About Section Styles */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .about-text {
+            order: 1;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .about-highlights {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .highlight-item {
+            text-align: center;
+            padding: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15);
+            border-color: var(--accent-color);
+        }
+
+        .highlight-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+
+        .highlight-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .about-image {
+            order: 2;
+            position: relative;
+        }
+
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-photo {
+            width: 300px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 3px solid var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .profile-photo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(139, 92, 246, 0.2);
+        }
+
+        .image-decoration {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: -1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Skills Section Styles */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 20px;
+        }
+
+        .skills-category h3 {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-weight: 600;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .skills-category h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            border-radius: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.15);
+            border-color: var(--accent-color);
+        }
+
+        .skill-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--tertiary-color);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: scale(1.1);
+            background: var(--accent-light);
+        }
+
+        .skill-icon svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .skill-card span {
+            display: block;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .skill-level {
+            width: 100%;
+            height: 6px;
+            background: var(--tertiary-color);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-hover));
+            border-radius: 3px;
+            transition: width 2s ease-in-out;
+            position: relative;
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .process-step.active .process-content {
+            max-height: 200px;
+            padding: 0 20px 20px;
+        }
+
+        .arrow {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s;
+            color: var(--accent-color);
+        }
+
+        .process-step.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        #contacts {
+            padding: 60px 0;
+        }
+
+        .contacts-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .contacts-text {
+            width: 50%;
+        }
+
+        .contacts-text p {
+            margin-bottom: 30px;
+        }
+
+        .social-links {
+            width: 45%;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-link:hover {
+            color: var(--accent-hover);
+        }
+
+        .social-link svg {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            fill: var(--accent-color);
+        }
+
+        footer {
+            border-top: 1px solid var(--accent-color);
+            padding: 20px 0;
+            margin-top: 60px;
+            text-align: center;
+            color: var(--muted-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 10px;
+                margin-bottom: -10px;
+            }
+
+            nav ul {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 0;
+            }
+
+            nav ul li {
+                margin: 0 10px 10px 0;
+                font-size: 0.9rem;
+            }
+
+            /* About section responsive */
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .about-text {
+                order: 2;
+            }
+
+            .about-image {
+                order: 1;
+            }
+
+            .about-highlights {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .profile-photo {
+                width: 250px;
+                height: 320px;
+            }
+
+            /* Skills section responsive */
+            .skills-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                margin-bottom: 0;
+            }
+
+            .contacts-container {
+                flex-direction: column;
+            }
+
+            .contacts-text,
+            .social-links {
+                width: 100%;
+            }
+
+            .social-links {
+                margin-top: 30px;
+            }
+
+            .section-title:after {
+                width: calc(100% - 150px);
+            }
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            will-change: transform;
+            transition: transform 0.1s ease-out;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: rgba(174, 129, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(20px, 20px);
+            }
+
+            50% {
+                transform: translate(10px, -10px);
+            }
+
+            75% {
+                transform: translate(-10px, 10px);
+            }
+        }
+
+        .theme-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            z-index: 9999;
+            clip-path: circle(0% at 50% 50%);
+            transition: none;
+            opacity: 0;
+            pointer-events: none;
+            mix-blend-mode: normal;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: none;
+            padding: 0;
+            color: var(--text-color);
+            position: relative;
+            z-index: 10000;
+        }
+
+        .theme-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover .theme-icon {
+            transform: scale(1.2);
+        }
+
+        /* Иконки темы */
+        .moon-icon {
+            display: block;
+        }
+
+        .sun-icon {
+            display: none;
+        }
+
+        [data-theme="light"] .moon-icon {
+            display: none;
+        }
+
+        [data-theme="light"] .sun-icon {
+            display: block;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pulse-glow {
+            position: relative;
+        }
+
+        .pulse-glow::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: var(--accent-color);
+            opacity: 0.15;
+            filter: blur(20px);
+            animation: pulseGlow 2s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(0.7);
+                opacity: 0.35;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.0);
+                opacity: 0.15;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="bgScene" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;"></canvas>
+    <div class="theme-overlay" id="themeOverlay"></div>
+    <div class="container">
+        <header>
+            <div class="logo pulse-glow">
+                <a href="#" style="text-decoration: none; color: inherit;">stisdan</a>
+                <svg class="star" viewBox="0 0 24 24">
+                    <path fill="#ae81ff"
+                        d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+                </svg>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="translate" data-key="home">#home</a></li>
+                    <li><a href="#about" class="translate" data-key="about">#about</a></li>
+                    <li><a href="#skills" class="translate" data-key="skills">#skills</a></li>
+                    <li><a href="#projects" class="translate" data-key="projects">#projects</a></li>
+                    <li><a href="#process" class="translate" data-key="process">#process</a></li>
+                    <li><a href="#contacts" class="translate" data-key="contacts">#contacts</a></li>
+                    <li class="language-switcher">
+                        <span class="current-lang">EN</span>
+                        <div class="language-dropdown">
+                            <a href="#" data-lang="en" class="selected">EN</a>
+                            <a href="#" data-lang="ru">RU</a>
+                        </div>
+                    </li>
+                    <li>
+                        <button class="theme-toggle" aria-label="Toggle theme">
+                            <svg class="theme-icon" viewBox="0 0 24 24">
+                                <!-- Иконка луны (темная тема) -->
+                                <path class="moon-icon" fill="currentColor"
+                                    d="M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z" />
+                                <!-- Иконка солнца (светлая тема) - скрыта по умолчанию -->
+                                <path class="sun-icon" fill="currentColor"
+                                    d="M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7L12,7z M12,2L12,2L12,2L12,2L12,2z M12,22L12,22L12,22L12,22L12,22z M5.64,7.05L5.64,7.05L5.64,7.05L5.64,7.05L5.64,7.05z M18.36,17L18.36,17L18.36,17L18.36,17L18.36,17z M2,12L2,12L2,12L2,12L2,12z M22,12L22,12L22,12L22,12L22,12z M5.64,16.95L5.64,16.95L5.64,16.95L5.64,16.95L5.64,16.95z M18.36,7.05L18.36,7.05L18.36,7.05L18.36,7.05L18.36,7.05z"
+                                    style="display: none;" />
+                            </svg>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <section id="home" class="hero">
+            <div class="hero">
+                <!-- <div class="particles" id="particles"></div> -->
+                <h1 class="translate" data-key="title">Web Designer And Developer</h1>
+                <p class="translate" data-key="subtitle">I create beautiful, functional websites that help businesses
+                    grow</p>
+                <a target="_blank" href="https://t.me/stisdan">
+                    <b class="contact-btn translate">
+                        Связаться
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20px" height="20px"
+                            style="vertical-align: middle; margin-left: 6px">
+                            <path
+                                d="M25,2c12.703,0,23,10.297,23,23S37.703,48,25,48S2,37.703,2,25S12.297,2,25,2z M32.934,34.375	c0.423-1.298,2.405-14.234,2.65-16.783c0.074-0.772-0.17-1.285-0.648-1.514c-0.578-0.278-1.434-0.139-2.427,0.219	c-1.362,0.491-18.774,7.884-19.78,8.312c-0.954,0.405-1.856,0.847-1.856,1.487c0,0.45,0.267,0.703,1.003,0.966	c0.766,0.273,2.695,0.858,3.834,1.172c1.097,0.303,2.346,0.04,3.046-0.395c0.742-0.461,9.305-6.191,9.92-6.693	c0.614-0.502,1.104,0.141,0.602,0.644c-0.502,0.502-6.38,6.207-7.155,6.997c-0.941,0.959-0.273,1.953,0.358,2.351	c0.721,0.454,5.906,3.932,6.687,4.49c0.781,0.558,1.573,0.811,2.298,0.811C32.191,36.439,32.573,35.484,32.934,34.375z" />
+                        </svg>
+                    </b>
+                </a>
+        </section>
+
+        <section id="about">
+            <h2 class="section-title translate fade-in-up" data-key="about"><span class="sharp">#</span>About me</h2>
+            <div class="about-content fade-in-up">
+                <div class="about-text">
+                    <p class="translate" data-key="about_text">I'm a passionate web designer and developer with 3+ years
+                        of experience creating modern, user-friendly digital experiences. I specialize in turning
+                        complex ideas into simple, beautiful interfaces that users love to interact with.</p>
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-number">15+</span>
+                            <span class="highlight-text translate" data-key="projects_completed">Projects
+                                Completed</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-number">3+</span>
+                            <span class="highlight-text translate" data-key="years_experience">Years Experience</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-number">100%</span>
+                            <span class="highlight-text translate" data-key="client_satisfaction">Client
+                                Satisfaction</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-container">
+                        <img src="Images/Portfolio.png" alt="Stisdan Profile" class="profile-photo">
+                        <div class="image-decoration"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2 class="section-title translate fade-in-up" data-key="skills"><span class="sharp">#</span>Skills & Tools
+            </h2>
+            <div class="skills-container">
+                <div class="skills-category fade-in-up">
+                    <h3 class="translate" data-key="design_tools">Design Tools</h3>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div class="skill-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision"
+                                    text-rendering="geometricPrecision" image-rendering="optimizeQuality"
+                                    fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 346 512.36">
+                                    <g fill-rule="nonzero">
+                                        <path fill="#00B6FF"
+                                            d="M172.53 246.9c0-42.04 34.09-76.11 76.12-76.11h11.01c.3.01.63-.01.94-.01 47.16 0 85.4 38.25 85.4 85.4 0 47.15-38.24 85.39-85.4 85.39-.31 0-.64-.01-.95-.01l-11 .01c-42.03 0-76.12-34.09-76.12-76.12V246.9z" />
+                                        <path fill="#24CB71"
+                                            d="M0 426.98c0-47.16 38.24-85.41 85.4-85.41l87.13.01v84.52c0 47.65-39.06 86.26-86.71 86.26C38.67 512.36 0 474.13 0 426.98z" />
+                                        <path fill="#FF7237"
+                                            d="M172.53.01v170.78h87.13c.3-.01.63.01.94.01 47.16 0 85.4-38.25 85.4-85.4C346 38.24 307.76 0 260.6 0c-.31 0-.64.01-.95.01h-87.12z" />
+                                        <path fill="#FF3737"
+                                            d="M0 85.39c0 47.16 38.24 85.4 85.4 85.4h87.13V.01H85.39C38.24.01 0 38.24 0 85.39z" />
+                                        <path fill="#874FFF"
+                                            d="M0 256.18c0 47.16 38.24 85.4 85.4 85.4h87.13V170.8H85.39C38.24 170.8 0 209.03 0 256.18z" />
+                                    </g>
+                                </svg>
+                            </div>
+                            <span>Figma</span>
+                            <div class="skill-level">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.76 498.97">
+                                    <defs>
+                                        <style>
+                                            .a {
+                                                fill: #001e36;
+                                            }
+
+                                            .b {
+                                                fill: #31a8ff;
+                                            }
+                                        </style>
+                                    </defs>
+                                    <title>adobe-photoshop</title>
+                                    <rect class="a" width="511.76" height="498.97" rx="90.62" />
+                                    <path class="b"
+                                        d="M115.24,349.91V130.53c0-1.59.68-2.4,2.06-2.4,3.65,0,7,0,12-.17s10.47-.23,16.31-.34l18.54-.35q9.78-.17,19.39-.17,26.09,0,44,6.52a76.4,76.4,0,0,1,28.66,17.51,67.06,67.06,0,0,1,15.62,24.21A80.31,80.31,0,0,1,276.61,203q0,27.48-12.7,45.32a71.82,71.82,0,0,1-34.33,25.92c-14.42,5.38-30.45,7.2-48.07,7.2-5,0-8.58-.05-10.64-.17s-5.15-.17-9.27-.17v68.49a2.72,2.72,0,0,1-2.32,3.09,2.49,2.49,0,0,1-.77,0H117.64C116,352.65,115.24,351.74,115.24,349.91ZM161.6,169.33v71.55q4.46.35,8.24.34h11.33a80.56,80.56,0,0,0,24.55-3.92A37,37,0,0,0,223.23,226q6.69-7.89,6.69-22a34.74,34.74,0,0,0-5-18.88A32,32,0,0,0,210,172.93,63.68,63.68,0,0,0,185,168.64q-8.25,0-14.59.17t-8.76.52Z" />
+                                    <path class="b"
+                                        d="M409.35,227.87a80,80,0,0,0-20.43-7.21,108.28,108.28,0,0,0-23.86-2.75,44.38,44.38,0,0,0-12.87,1.55,11.55,11.55,0,0,0-6.7,4.29,10.79,10.79,0,0,0-1.71,5.84,9.08,9.08,0,0,0,2.06,5.49,23.25,23.25,0,0,0,7.21,5.66,141.8,141.8,0,0,0,15.1,7,150,150,0,0,1,32.79,15.62,50,50,0,0,1,16.82,17.68,47.17,47.17,0,0,1,5,22,49.41,49.41,0,0,1-8.24,28.33,54.23,54.23,0,0,1-23.86,19.05Q375,357.3,352,357.3a140.51,140.51,0,0,1-29-2.75,92.44,92.44,0,0,1-21.8-6.87,4.44,4.44,0,0,1-2.41-4.12V306.49a2,2,0,0,1,.86-1.89,1.66,1.66,0,0,1,1.89.17A91.62,91.62,0,0,0,328,315.24a108.66,108.66,0,0,0,25.07,3.26q12,0,17.68-3.09a9.7,9.7,0,0,0,5.66-8.92q0-4.47-5.15-8.59T350.3,288a126.06,126.06,0,0,1-30.38-15.45,52.42,52.42,0,0,1-16.14-18,47.35,47.35,0,0,1-5-21.8A49.21,49.21,0,0,1,306,206.93a52.37,52.37,0,0,1,22.32-19.57q15.1-7.55,37.76-7.55a167.13,167.13,0,0,1,26.44,1.88,69.58,69.58,0,0,1,18.4,5,3.13,3.13,0,0,1,2.06,1.89,9.31,9.31,0,0,1,.34,2.57v34.68a2.3,2.3,0,0,1-1,2.06A3.33,3.33,0,0,1,409.35,227.87Z" />
+                                </svg>
+                            </div>
+                            <span>Photoshop</span>
+                            <div class="skill-level">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-icon">
+                                <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 499.77 405.98">
+                                    <defs>
+                                        <style>
+                                            .cls-1 {
+                                                fill: #fff;
+                                            }
+
+                                            .cls-2 {
+                                                fill: #265787;
+                                            }
+
+                                            .cls-3 {
+                                                fill: #ea7600;
+                                            }
+                                        </style>
+                                    </defs>
+                                    <title>blender</title>
+                                    <path class="cls-1"
+                                        d="M196.49,225.35c1.82-32.49,17.73-61.11,41.73-81.4,23.54-19.92,55.22-32.1,89.78-32.1S394.21,124,417.77,144c24,20.29,39.89,48.91,41.73,81.37,1.82,33.38-11.6,64.39-35.14,87.37-24,23.38-58.13,38.06-96.36,38.06s-72.43-14.68-96.41-38.06C208,289.71,194.66,258.7,196.49,225.35Z" />
+                                    <path class="cls-2"
+                                        d="M260.53,228.27c.93-16.67,9.1-31.36,21.41-41.77a72.65,72.65,0,0,1,92.13,0c12.3,10.41,20.47,25.1,21.41,41.75.93,17.13-6,33-18,44.83-12.31,12-29.83,19.53-49.44,19.53s-37.16-7.53-49.47-19.53C266.45,261.29,259.59,245.38,260.53,228.27Z" />
+                                    <path class="cls-3"
+                                        d="M153.08,262c.11,6.52,2.19,19.2,5.31,29.1a153.58,153.58,0,0,0,33.16,57.42,171.34,171.34,0,0,0,58,41.67A189.71,189.71,0,0,0,402,389.88,172.65,172.65,0,0,0,460,348a154.79,154.79,0,0,0,33.15-57.53,145.39,145.39,0,0,0,6.24-32.11,146.87,146.87,0,0,0-1-31.9,148.49,148.49,0,0,0-21.15-57.87,161.49,161.49,0,0,0-38.58-42.53l0,0L282.5,6.2c-.14-.11-.26-.22-.41-.32-10.24-7.86-27.47-7.83-38.73,0s-12.69,21.14-2.56,29.46l0,0,65.11,53-198.46.21h-.27C90.74,88.61,75,99.37,71.85,113c-3.21,13.86,7.93,25.36,25,25.42l0,.06,100.6-.19L17.9,276l-.69.51C.28,289.52-5.2,311.08,5.47,324.73c10.82,13.87,33.84,13.9,51,.08l98-80.18A152.15,152.15,0,0,0,153.08,262ZM404.82,298.2c-20.18,20.56-48.44,32.22-79,32.28s-58.89-11.5-79.07-32a93.92,93.92,0,0,1-21.58-33.78,87.69,87.69,0,0,1-5-37.74A89.11,89.11,0,0,1,231,191.39a98,98,0,0,1,24-28.55c19.62-16,44.6-24.65,70.73-24.68s51.12,8.54,70.76,24.48a97.5,97.5,0,0,1,24,28.46,89.19,89.19,0,0,1,10.86,35.52,87.81,87.81,0,0,1-5,37.72A94.33,94.33,0,0,1,404.82,298.2Z" />
+                                </svg>
+                            </div>
+                            <span>Blender</span>
+                            <div class="skill-level">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.45 498.66">
+                                    <defs>
+                                        <style>
+                                            .a {
+                                                fill: #300;
+                                            }
+
+                                            .b {
+                                                fill: #ff9a00;
+                                            }
+                                        </style>
+                                    </defs>
+                                    <title>adobe-illustrator</title>
+                                    <rect class="a" width="511.45" height="498.66" rx="90.57" />
+                                    <path class="b"
+                                        d="M247.84,299.26H168.58l-16.12,50.09a4,4,0,0,1-4.12,3.09H108.2q-3.44,0-2.4-3.78L174.42,151q1-3.09,2.06-7a74.51,74.51,0,0,0,1.37-13.9,2.11,2.11,0,0,1,1.8-2.4,2,2,0,0,1,.6,0H234.8c1.6,0,2.51.57,2.75,1.71L315.43,349c.69,2.28,0,3.43-2.06,3.43h-44.6a3.17,3.17,0,0,1-3.43-2.4ZM180.94,256h54.2q-2.05-6.87-4.8-15.44t-5.83-18.36l-6.18-19.55q-3.09-9.78-5.66-18.88T208,167.17h-.34a276.76,276.76,0,0,1-7.21,27.44q-4.8,15.45-9.78,31.57T180.94,256Z" />
+                                    <path class="b"
+                                        d="M361.74,164.08a24.9,24.9,0,0,1-18.87-7.55,27.12,27.12,0,0,1-7.2-19.56,25.17,25.17,0,0,1,7.72-19,26.52,26.52,0,0,1,19-7.38q12.35,0,19.38,7.38a26.52,26.52,0,0,1,7,19,26.78,26.78,0,0,1-7.38,19.56A26.32,26.32,0,0,1,361.74,164.08ZM338.07,349V185c0-2.06.91-3.09,2.74-3.09H383c1.82,0,2.74,1,2.74,3.09V349c0,2.28-.91,3.43-2.74,3.43H341.16C339.1,352.44,338.07,351.29,338.07,349Z" />
+                                </svg>
+                            </div>
+                            <span>Illustrator</span>
+                            <div class="skill-level">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-category fade-in-up">
+                    <h3 class="translate" data-key="development_tools">Development</h3>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div class="skill-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path fill="#E34F26"
+                                        d="M12,17.56L16.07,16.43L16.62,10.33H9.38L9.2,8.3H16.8L17,6.31H7L7.56,12.32H14.45L14.22,14.9L12,15.5L9.78,14.9L9.64,13.24H7.64L7.93,16.43L12,17.56M4.07,3H19.93L18.5,19.68L12,21.5L5.5,19.68L4.07,3Z" />
+                                </svg>
+                            </div>
+                            <span>HTML5</span>
+                            <div class="skill-level">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path fill="#1572B6"
+                                        d="M5,3L4.35,6.34H17.94L17.5,8.5H3.92L3.26,11.83H16.85L16.09,15.64L10.61,17.45L5.86,15.64L6.19,14H2.85L2.06,18L9.91,21L18.96,18L20.16,11.97L20.4,10.76L21.94,3H5Z" />
+                                </svg>
+                            </div>
+                            <span>CSS3</span>
+                            <div class="skill-level">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path fill="#F7DF1E"
+                                        d="M3,3H21V21H3V3M7.73,18.04C8.13,18.89 8.92,19.59 10.27,19.59C11.77,19.59 12.8,18.79 12.8,17.04V11.26H11.1V17C11.1,17.86 10.75,18.08 10.2,18.08C9.62,18.08 9.38,17.68 9.11,17.21L7.73,18.04M13.71,17.86C14.21,18.84 15.22,19.59 16.8,19.59C18.4,19.59 19.6,18.76 19.6,17.23C19.6,15.82 18.79,15.19 17.35,14.57L16.93,14.39C16.2,14.08 15.89,13.87 15.89,13.37C15.89,12.96 16.2,12.64 16.7,12.64C17.18,12.64 17.5,12.85 17.79,13.37L19.1,12.5C18.55,11.54 17.77,11.17 16.7,11.17C15.19,11.17 14.22,12.13 14.22,13.4C14.22,14.78 15.03,15.43 16.25,15.95L16.67,16.13C17.45,16.47 17.91,16.68 17.91,17.26C17.91,17.74 17.46,18.09 16.76,18.09C15.93,18.09 15.45,17.66 15.09,17.06L13.71,17.86Z" />
+                                </svg>
+                            </div>
+                            <span>JavaScript</span>
+                            <div class="skill-level">
+                                <div class="skill-progress" style="width: 82%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-icon">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 109.19 122.88" style="enable-background:new 0 0 109.19 122.88"
+                                    xml:space="preserve">
+                                    <style type="text/css">
+                                        .st0 {
+                                            fill-rule: evenodd;
+                                            clip-rule: evenodd;
+                                            fill: #00599C;
+                                        }
+
+                                        .st1 {
+                                            fill-rule: evenodd;
+                                            clip-rule: evenodd;
+                                            fill: #004482;
+                                        }
+
+                                        .st2 {
+                                            fill-rule: evenodd;
+                                            clip-rule: evenodd;
+                                            fill: #659AD2;
+                                        }
+
+                                        .st3 {
+                                            fill-rule: evenodd;
+                                            clip-rule: evenodd;
+                                            fill: #FFFFFF;
+                                        }
+                                    </style>
+                                    <g>
+                                        <path class="st0"
+                                            d="M107.81,92.16c0.86-1.48,1.39-3.16,1.39-4.66V35.38c0-1.5-0.53-3.17-1.39-4.66L54.6,61.44L107.81,92.16 L107.81,92.16z" />
+                                        <path class="st1"
+                                            d="M59.33,121.75l45.14-26.06c1.3-0.75,2.48-2.05,3.34-3.53L54.6,61.44L1.39,92.16c0.86,1.48,2.04,2.78,3.34,3.53 l45.14,26.06C52.47,123.26,56.73,123.26,59.33,121.75L59.33,121.75z" />
+                                        <path class="st2"
+                                            d="M107.81,30.72c-0.86-1.48-2.04-2.78-3.34-3.53L59.33,1.13c-2.6-1.5-6.86-1.5-9.46,0L4.73,27.19 C2.13,28.69,0,32.37,0,35.38V87.5c0,1.5,0.53,3.17,1.39,4.66L54.6,61.44L107.81,30.72L107.81,30.72z" />
+                                        <path class="st3"
+                                            d="M54.6,97.84c-20.07,0-36.4-16.33-36.4-36.4c0-20.07,16.33-36.4,36.4-36.4c12.95,0,25.03,6.97,31.52,18.19 l-15.75,9.12c-3.25-5.62-9.29-9.1-15.77-9.1c-10.04,0-18.2,8.16-18.2,18.2c0,10.03,8.16,18.2,18.2,18.2 c6.48,0,12.52-3.49,15.77-9.1l15.75,9.12C79.63,90.87,67.55,97.84,54.6,97.84L54.6,97.84z" />
+                                        <polygon class="st3"
+                                            points="91,59.42 86.95,59.42 86.95,55.37 82.91,55.37 82.91,59.42 78.86,59.42 78.86,63.46 82.91,63.46 82.91,67.51 86.95,67.51 86.95,63.46 91,63.46 91,59.42" />
+                                        <polygon class="st3"
+                                            points="106.16,59.42 102.12,59.42 102.12,55.37 98.07,55.37 98.07,59.42 94.03,59.42 94.03,63.46 98.07,63.46 98.07,67.51 102.12,67.51 102.12,63.46 106.16,63.46 106.16,59.42" />
+                                    </g>
+                                </svg>
+                            </div>
+                            <span>C++</span>
+                            <div class="skill-level">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-icon">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 121.54 122.88" style="enable-background:new 0 0 121.54 122.88"
+                                    xml:space="preserve">
+                                    <style type="text/css">
+                                        .st0 {
+                                            clip-path: url(#SVGID_2_);
+                                        }
+
+                                        .st1 {
+                                            clip-path: url(#SVGID_6_);
+                                        }
+                                    </style>
+                                    <g>
+                                        <g>
+                                            <defs>
+                                                <path id="SVGID_1_"
+                                                    d="M60.04,0c-5.01,0.02-9.8,0.45-14.01,1.2C33.63,3.39,31.38,7.98,31.38,16.44v11.17h29.32v3.72H31.38h-11 c-8.52,0-15.98,5.12-18.31,14.86c-2.69,11.17-2.81,18.13,0,29.79c2.08,8.68,7.06,14.86,15.58,14.86h10.08V77.46 c0-9.68,8.37-18.21,18.31-18.21h29.28c8.15,0,14.66-6.71,14.66-14.9V16.44c0-7.94-6.7-13.91-14.66-15.24 C70.28,0.36,65.06-0.02,60.04,0L60.04,0z M44.19,8.99c3.03,0,5.5,2.51,5.5,5.6c0,3.08-2.47,5.57-5.5,5.57 c-3.04,0-5.5-2.49-5.5-5.57C38.69,11.5,41.15,8.99,44.19,8.99L44.19,8.99z" />
+                                            </defs>
+                                            <clipPath id="SVGID_2_">
+                                                <use xlink:href="#SVGID_1_" style="overflow:visible" />
+                                            </clipPath>
+                                            <g class="st0">
+                                                <defs>
+                                                    <rect id="SVGID_3_" x="-0.75" y="-0.02" width="90.72"
+                                                        height="90.87" />
+                                                </defs>
+                                                <clipPath id="SVGID_4_">
+                                                    <use xlink:href="#SVGID_3_" style="overflow:visible" />
+                                                </clipPath>
+                                                <g style="clip-path:url(#SVGID_4_)">
+                                                    <polygon style="fill:#387EB8;" points="-1,90 90,90 90,-1 -1,-1 " />
+                                                </g>
+                                            </g>
+                                        </g>
+                                        <g>
+                                            <defs>
+                                                <path id="SVGID_5_"
+                                                    d="M93.63,31.33v13.02c0,10.09-8.56,18.59-18.31,18.59H46.04c-8.02,0-14.66,6.86-14.66,14.9v27.91 c0,7.94,6.91,12.62,14.66,14.9c9.28,2.73,18.18,3.22,29.28,0c7.38-2.14,14.66-6.44,14.66-14.9V94.58H60.69v-3.72h29.28h14.66 c8.52,0,11.69-5.94,14.66-14.86c3.06-9.18,2.93-18.01,0-29.79c-2.11-8.48-6.13-14.86-14.66-14.86H93.63L93.63,31.33z M77.16,102.02c3.04,0,5.5,2.49,5.5,5.57c0,3.09-2.46,5.6-5.5,5.6c-3.03,0-5.5-2.51-5.5-5.6 C71.66,104.51,74.13,102.02,77.16,102.02L77.16,102.02z" />
+                                            </defs>
+                                            <clipPath id="SVGID_6_">
+                                                <use xlink:href="#SVGID_5_" style="overflow:visible" />
+                                            </clipPath>
+                                            <g class="st1">
+                                                <defs>
+                                                    <rect id="SVGID_7_" x="31.38" y="31.33" width="90.97"
+                                                        height="92.53" />
+                                                </defs>
+                                                <clipPath id="SVGID_8_">
+                                                    <use xlink:href="#SVGID_7_" style="overflow:visible" />
+                                                </clipPath>
+                                                <g style="clip-path:url(#SVGID_8_)">
+                                                    <polygon style="fill:#FFD23F;"
+                                                        points="31,124 123,124 123,31 31,31 " />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <span>Python</span>
+                            <div class="skill-level">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="projects">
+            <h2 class="section-title translate fade-in-up" data-key="projects">
+                <span class="sharp">#</span>Projects
+            </h2>
+            <div class="projects-grid">
+
+                <!-- Сайт по демонтажным работам -->
+                <div class="project-card" data-project="demolition">
+                    <div class="project-img">
+                        <img alt="Демонтажные работы" src="Images/Demontazh.png">
+                        <div class="project-overlay">
+                            <div class="project-stats">
+                                <span class="stat-item time">
+                                    <i class="fas fa-clock"></i>
+                                    <span>2-3 недели</span>
+                                </span>
+                                <span class="stat-item price">
+                                    <i class="fas fa-ruble-sign"></i>
+                                    <span>45 000</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3 class="translate" data-key="project6_title">Сайт по демонтажным работам</h3>
+                            <div class="project-badges">
+                                <span class="badge badge-primary">Web Development</span>
+                                <span class="badge badge-secondary">Corporate</span>
+                            </div>
+                        </div>
+                        <p class="translate" data-key="project6_desc">
+                            Современный корпоративный сайт для компании, предоставляющей услуги по демонтажным и
+                            земельным работам. Разработан с акцентом на профессиональность и доверие.
+                        </p>
+                        <div class="project-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Технологии:</span>
+                                <span class="detail-value">HTML5, CSS3, JavaScript</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Тип:</span>
+                                <span class="detail-value">Корпоративный сайт</span>
+                            </div>
+                        </div>
+                        <a href="https://demontazh22.vercel.app" target="_blank" class="project-link">
+                            <span>Посмотреть проект</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Marketplace cards -->
+                <div class="project-card" data-project="marketplace">
+                    <div class="project-img">
+                        <img alt="Marketplace" src="Images/Marketplace.png">
+                        <div class="project-overlay">
+                            <div class="project-stats">
+                                <span class="stat-item time">
+                                    <i class="fas fa-clock"></i>
+                                    <span>3-5 дней</span>
+                                </span>
+                                <span class="stat-item price">
+                                    <i class="fas fa-ruble-sign"></i>
+                                    <span>15 000</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3 class="translate" data-key="project1_title">Marketplace Cards</h3>
+                            <div class="project-badges">
+                                <span class="badge badge-primary">UI Design</span>
+                                <span class="badge badge-secondary">E-commerce</span>
+                            </div>
+                        </div>
+                        <p class="translate" data-key="project1_desc">
+                            Современный редизайн карточек товаров для различных магазинов на маркетплейсах. Фокус на
+                            повышение конверсии и улучшение пользовательского опыта.
+                        </p>
+                        <div class="project-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Инструменты:</span>
+                                <span class="detail-value">Figma, Adobe XD</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Тип:</span>
+                                <span class="detail-value">UI дизайн</span>
+                            </div>
+                        </div>
+                        <a href="https://www.figma.com/design/Mc3xKZVON3o3VZbopENwie/Marketplace?node-id=0-1&t=WjjPy020nhladWgh-1"
+                            target="_blank" class="project-link">
+                            <span>Посмотреть проект</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Article design -->
+                <div class="project-card" data-project="article">
+                    <div class="project-img">
+                        <img alt="Article" src="Images/Article.png">
+                        <div class="project-overlay">
+                            <div class="project-stats">
+                                <span class="stat-item time">
+                                    <i class="fas fa-clock"></i>
+                                    <span>3-5 дней</span>
+                                </span>
+                                <span class="stat-item price">
+                                    <i class="fas fa-ruble-sign"></i>
+                                    <span>15 000</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3 class="translate" data-key="project2_title">Article Design</h3>
+                            <div class="project-badges">
+                                <span class="badge badge-primary">UI Design</span>
+                                <span class="badge badge-secondary">Editorial</span>
+                            </div>
+                        </div>
+                        <p class="translate" data-key="project2_desc">
+                            Дизайн научных статей в стиле социальных платформ. Создан для улучшения читабельности и
+                            вовлеченности читателей в научный контент.
+                        </p>
+                        <div class="project-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Инструменты:</span>
+                                <span class="detail-value">Figma, Typography</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Тип:</span>
+                                <span class="detail-value">UI дизайн</span>
+                            </div>
+                        </div>
+                        <a href="https://www.figma.com/design/Xr32AEIkWWqwOhuT4aSc9l/TextCase?node-id=0-1&t=AKBiIysI0AMC9yhD-1"
+                            target="_blank" class="project-link">
+                            <span>Посмотреть проект</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Portfolio -->
+                <div class="project-card" data-project="portfolio">
+                    <div class="project-img">
+                        <img alt="Portfolio" src="Images/Portfolio.png">
+                        <div class="project-overlay">
+                            <div class="project-stats">
+                                <span class="stat-item time">
+                                    <i class="fas fa-clock"></i>
+                                    <span>1-2 недели</span>
+                                </span>
+                                <span class="stat-item price">
+                                    <i class="fas fa-ruble-sign"></i>
+                                    <span>30 000</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3 class="translate" data-key="project3_title">Portfolio</h3>
+                            <div class="project-badges">
+                                <span class="badge badge-primary">Web Development</span>
+                                <span class="badge badge-secondary">Personal</span>
+                            </div>
+                        </div>
+                        <p class="translate" data-key="project3_desc">
+                            Персональное портфолио с современным дизайном и интерактивными элементами. Вы находитесь
+                            здесь прямо сейчас и можете оценить качество работы.
+                        </p>
+                        <div class="project-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Технологии:</span>
+                                <span class="detail-value">HTML5, CSS3, JavaScript</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Тип:</span>
+                                <span class="detail-value">Портфолио сайт</span>
+                            </div>
+                        </div>
+                        <a href="#" class="project-link">
+                            <span>Посмотреть проект</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Ad for academy -->
+                <div class="project-card" data-project="ad">
+                    <div class="project-img">
+                        <img alt="Ad" src="Images/Ad.png">
+                        <div class="project-overlay">
+                            <div class="project-stats">
+                                <span class="stat-item time">
+                                    <i class="fas fa-clock"></i>
+                                    <span>2-3 дня</span>
+                                </span>
+                                <span class="stat-item price">
+                                    <i class="fas fa-ruble-sign"></i>
+                                    <span>8 000</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3 class="translate" data-key="project4_title">Ad for Academy</h3>
+                            <div class="project-badges">
+                                <span class="badge badge-primary">Graphic Design</span>
+                                <span class="badge badge-secondary">Advertising</span>
+                            </div>
+                        </div>
+                        <p class="translate" data-key="project4_desc">
+                            Рекламный баннер для образовательной академии. Тестовый проект, демонстрирующий навыки
+                            создания эффективной рекламной графики.
+                        </p>
+                        <div class="project-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Инструменты:</span>
+                                <span class="detail-value">Figma, Photoshop</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Тип:</span>
+                                <span class="detail-value">Реклама/баннер</span>
+                            </div>
+                        </div>
+                        <a href="https://www.figma.com/design/cthCmVD9SykCXtilb2e4WN/Ad?node-id=0-1&t=XGOaR5btycjFRBik-1"
+                            target="_blank" class="project-link">
+                            <span>Посмотреть проект</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Presentation for Alpha Bank -->
+                <div class="project-card" data-project="presentation">
+                    <div class="project-img">
+                        <img alt="Presentation" src="Images/Presentation.png">
+                        <div class="project-overlay">
+                            <div class="project-stats">
+                                <span class="stat-item time">
+                                    <i class="fas fa-clock"></i>
+                                    <span>1 неделя</span>
+                                </span>
+                                <span class="stat-item price">
+                                    <i class="fas fa-ruble-sign"></i>
+                                    <span>20 000</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3 class="translate" data-key="project5_title">Presentation for Alpha Bank</h3>
+                            <div class="project-badges">
+                                <span class="badge badge-primary">Presentation</span>
+                                <span class="badge badge-secondary">Corporate</span>
+                            </div>
+                        </div>
+                        <p class="translate" data-key="project5_desc">
+                            Презентация идеи для конкурса Альфа-Банка. Современный дизайн с акцентом на четкую структуру
+                            и визуальную привлекательность.
+                        </p>
+                        <div class="project-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Инструменты:</span>
+                                <span class="detail-value">Figma, Keynote</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Тип:</span>
+                                <span class="detail-value">Презентация</span>
+                            </div>
+                        </div>
+                        <a href="https://www.figma.com/design/PlCpfvd9NEQkyfmViulISV/Presentation?node-id=1-445&t=0D0rx5asTXFerC1z-1"
+                            target="_blank" class="project-link">
+                            <span>Посмотреть проект</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="process">
+            <h2 class="section-title translate fade-in-up" data-key="process"><span class="sharp">#</span>Process</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="process-header">
+                        <h3 class="translate" data-key="brief">Brief</h3>
+                        <svg class="arrow" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                        </svg>
+                    </div>
+                    <div class="process-content">
+                        <p class="translate" data-key="brief_text">This is where we discuss project requirements, goals,
+                            and initial ideas with the client to establish a clear direction for the project.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="process-header">
+                        <h3 class="translate" data-key="analysis">Analysis</h3>
+                        <svg class="arrow" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                        </svg>
+                    </div>
+                    <div class="process-content">
+                        <p class="translate" data-key="analysis_text">Here we conduct market research, competitor
+                            analysis, and technical feasibility studies to inform our design decisions.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="process-header">
+                        <h3 class="translate" data-key="concept">Concept</h3>
+                        <svg class="arrow" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                        </svg>
+                    </div>
+                    <div class="process-content">
+                        <p class="translate" data-key="concept_text">This phase involves creating wireframes, mockups,
+                            and prototypes to visualize the final product before development begins.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="process-header">
+                        <h3 class="translate" data-key="development">Development</h3>
+                        <svg class="arrow" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                        </svg>
+                    </div>
+                    <div class="process-content">
+                        <p class="translate" data-key="development_text">The actual coding and implementation phase
+                            where we bring the design to life with clean, efficient code.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacts">
+            <h2 class="section-title translate fade-in-up" data-key="contacts"><span class="sharp">#</span>Contacts</h2>
+            <div class="contacts-container">
+                <div class="contacts-text">
+                    <p class="translate" data-key="contacts_text">I'm interested in freelance opportunities. However, if
+                        you have other request or question, don't hesitate to contact me.</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://t.me/stisdan" target="_blank" class="social-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px">
+                            <path
+                                d="M25,2c12.703,0,23,10.297,23,23S37.703,48,25,48S2,37.703,2,25S12.297,2,25,2z M32.934,34.375	c0.423-1.298,2.405-14.234,2.65-16.783c0.074-0.772-0.17-1.285-0.648-1.514c-0.578-0.278-1.434-0.139-2.427,0.219	c-1.362,0.491-18.774,7.884-19.78,8.312c-0.954,0.405-1.856,0.847-1.856,1.487c0,0.45,0.267,0.703,1.003,0.966	c0.766,0.273,2.695,0.858,3.834,1.172c1.097,0.303,2.346,0.04,3.046-0.395c0.742-0.461,9.305-6.191,9.92-6.693	c0.614-0.502,1.104,0.141,0.602,0.644c-0.502,0.502-6.38,6.207-7.155,6.997c-0.941,0.959-0.273,1.953,0.358,2.351	c0.721,0.454,5.906,3.932,6.687,4.49c0.781,0.558,1.573,0.811,2.298,0.811C32.191,36.439,32.573,35.484,32.934,34.375z" />
+                        </svg>
+                        </svg>
+                        t.me/stisdan
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg viewBox="0 0 128 128">
+                            <path
+                                d="M46.3086 0.016023C46.3086 0.016023 28.8682 1.21249 17.4624 10.3569C17.4089 10.3782 17.3447 10.4103 17.2912 10.4423C15.3118 12.2691 13.8246 15.1 11.9842 19.1594C10.1439 23.2189 8.19658 28.4427 6.42044 34.2861C2.87887 45.9837 0.000669416 60.3413 0.000669416 73.8549C-0.0100295 74.3356 0.107667 74.8056 0.343057 75.2223C4.34471 82.2408 11.706 86.4818 18.5752 89.1525C25.4444 91.8232 31.7892 92.8915 35.0098 92.9983C35.9193 93.0303 36.7859 92.6137 37.3209 91.8873L43.9975 82.6574C49.3794 83.9287 55.6922 84.794 63 84.794C70.3078 84.794 76.6206 83.9287 82.0025 82.6574L88.6791 91.8873C89.2141 92.6137 90.0807 93.0303 90.9902 92.9983C94.2108 92.8915 100.556 91.8232 107.425 89.1525C114.294 86.4818 121.655 82.2408 125.657 75.2223C125.892 74.8056 126.01 74.3356 125.999 73.8549C125.999 60.3413 123.121 45.9837 119.58 34.2861C117.803 28.4427 115.856 23.2189 114.016 19.1594C112.175 15.1 110.688 12.2691 108.709 10.4423C108.655 10.4103 108.591 10.3782 108.538 10.3569C97.1318 1.21249 79.6914 0.016023 79.6914 0.016023C79.4881 -0.00534101 79.2955 -0.00534101 79.0922 0.016023C78.14 0.144215 77.3375 0.763814 76.9523 1.63979C76.9523 1.63979 76.0214 3.68019 75.4116 6.59657C70.0724 5.74195 65.5786 5.48557 63 5.48557C60.4214 5.48557 55.9276 5.74195 50.5884 6.59657C49.9786 3.68019 49.0477 1.63979 49.0477 1.63979C48.5769 0.571524 47.4749 -0.0801206 46.3086 0.016023ZM44.5967 5.91288C44.8 6.46838 44.9391 6.99183 45.1102 7.62211C38.9366 9.05359 32.1744 11.3931 25.8509 15.3137C24.8559 15.7303 24.2032 16.6917 24.1711 17.7707C24.1497 18.8389 24.7596 19.8324 25.7225 20.3025C26.6962 20.7618 27.8518 20.623 28.6756 19.9286C41.3654 12.0768 57.5111 10.9551 63 10.9551C68.4889 10.9551 84.6346 12.0768 97.3244 19.9286C98.1482 20.623 99.3038 20.7618 100.277 20.3025C101.24 19.8324 101.85 18.8389 101.829 17.7707C101.797 16.6917 101.144 15.7303 100.149 15.3137C93.8256 11.3931 87.0634 9.05359 80.8898 7.62211C81.0609 6.99183 81.2 6.46838 81.4033 5.91288C84.5276 6.29745 96.6717 7.93191 104.942 14.459C105.477 14.9504 107.339 17.6852 109.051 21.4669C110.763 25.2486 112.561 30.1733 114.273 35.8244C117.611 46.849 120.307 60.4481 120.436 72.9148C117.322 77.9463 111.48 81.6853 105.456 84.0248C99.9779 86.1507 94.8635 87.1014 92.1886 87.3578L87.5663 81.1191C89.9202 80.3606 92.0388 79.5381 93.9005 78.7262C100.812 75.6923 104.515 72.4875 104.515 72.4875C105.649 71.4726 105.745 69.7314 104.729 68.599C103.712 67.4666 101.968 67.3705 100.834 68.3853C100.834 68.3853 97.9663 71.0026 91.675 73.7694C89.3639 74.7843 86.5606 75.7884 83.3721 76.6751C82.6338 76.5896 81.8955 76.8033 81.3177 77.2733C76.214 78.5125 70.1473 79.3244 63 79.3244C55.7992 79.3244 49.7218 78.4377 44.5967 77.1879C44.0189 76.8033 43.3127 76.6431 42.6279 76.7606C39.4287 75.8739 36.6469 74.7843 34.325 73.7694C28.0337 71.0026 25.1662 68.3853 25.1662 68.3853C24.5456 67.8085 23.6896 67.5628 22.855 67.7016C21.7958 67.8619 20.9184 68.6203 20.6295 69.6566C20.3299 70.6821 20.6723 71.7931 21.4855 72.4875C21.4855 72.4875 25.1876 75.6923 32.0995 78.7262C33.9612 79.5381 36.0798 80.3606 38.4337 81.1191L33.8115 87.3578C31.1365 87.1014 26.0221 86.1507 20.5439 84.0248C14.52 81.6853 8.67806 77.9463 5.56447 72.9148C5.69286 60.4481 8.38917 46.849 11.7274 35.8244C13.4394 30.1733 15.2369 25.2486 16.9489 21.4669C18.6608 17.6852 20.5225 14.9504 21.0575 14.459C29.3283 7.93191 41.4724 6.29745 44.5967 5.91288ZM45.1958 38.3028C38.209 38.3028 32.8699 44.6377 32.8699 51.9767C32.8699 59.3157 38.209 65.6506 45.1958 65.6506C52.1827 65.6506 57.5218 59.3157 57.5218 51.9767C57.5218 44.6377 52.1827 38.3028 45.1958 38.3028ZM80.8042 38.3028C73.8173 38.3028 68.4782 44.6377 68.4782 51.9767C68.4782 59.3157 73.8173 65.6506 80.8042 65.6506C87.791 65.6506 93.1301 59.3157 93.1301 51.9767C93.1301 44.6377 87.791 38.3028 80.8042 38.3028ZM45.1958 43.7724C48.8016 43.7724 52.0436 47.2336 52.0436 51.9767C52.0436 56.7198 48.8016 60.181 45.1958 60.181C41.5901 60.181 38.3481 56.7198 38.3481 51.9767C38.3481 47.2336 41.5901 43.7724 45.1958 43.7724ZM80.8042 43.7724C84.4099 43.7724 87.6519 47.2336 87.6519 51.9767C87.6519 56.7198 84.4099 60.181 80.8042 60.181C77.1984 60.181 73.9564 56.7198 73.9564 51.9767C73.9564 47.2336 77.1984 43.7724 80.8042 43.7724Z"
+                                fill="#ae81ff" />
+                        </svg>
+                        @st1sdab
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>2025. All rights reserved. Made by stisdan</p>
+        </div>
+    </footer>
+</body>
+
+</html>
+<script defer>
+    // Process steps accordion functionality
+    const processSteps = document.querySelectorAll('.process-step');
+
+    processSteps.forEach(step => {
+        const header = step.querySelector('.process-header');
+
+        header.addEventListener('click', () => {
+            // Close all other steps
+            processSteps.forEach(otherStep => {
+                if (otherStep !== step && otherStep.classList.contains('active')) {
+                    otherStep.classList.remove('active');
+                }
+            });
+
+            // Toggle current step
+            step.classList.toggle('active');
+        });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            const headerHeight = document.querySelector('header').offsetHeight;
+
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Language switcher
+    const languageSwitcher = document.querySelector('.language-switcher');
+    const languageDropdown = document.querySelector('.language-dropdown');
+    const languageLinks = document.querySelectorAll('.language-dropdown a');
+
+    languageSwitcher.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Toggle dropdown regardless of current language
+        languageDropdown.classList.toggle('active');
+    });
+
+    document.addEventListener('click', () => {
+        languageDropdown.classList.remove('active');
+    });
+
+    // Translation functionality
+    const translations = {
+        en: {
+            title: "Web Designer And Developer",
+            subtitle: "I create beautiful, functional websites that help businesses grow",
+            contact_btn: "Contact Me",
+            home: "#home",
+            about: "#about",
+            about_text: "I'm a passionate web designer and developer with 3+ years of experience creating modern, user-friendly digital experiences. I specialize in turning complex ideas into simple, beautiful interfaces that users love to interact with.",
+            projects_completed: "Projects Completed",
+            years_experience: "Years Experience",
+            client_satisfaction: "Client Satisfaction",
+            skills: "#skills",
+            design_tools: "Design Tools",
+            development_tools: "Development",
+            projects: "#projects",
+            project1_title: "Marketplace cards",
+            project1_desc: "A modern upgrade for various shops on marketplaces.",
+            project3_title: "Portfolio Website",
+            project3_desc: "You are here right now.",
+            project2_title: "Article design",
+            project2_desc: "Science article design in style of social platforms.",
+            project4_title: "Ad for academy",
+            project4_desc: "Test project for academy.",
+            project5_title: "Presentation for Alpha Bank",
+            project5_desc: "Idea presentation for Alpha Bank case presentation.",
+            project6_title: " Website for demolition work",
+            project6_desc: " Website for demolition and land works company.",
+            view_project: "View project",
+            process: "#process",
+            brief: "brief",
+            brief_text: "This is where we discuss project requirements, goals, and initial ideas with the client to establish a clear direction for the project.",
+            analysis: "analysis",
+            analysis_text: "Here we conduct market research, competitor analysis, and technical feasibility studies to inform our design decisions.",
+            concept: "concept",
+            concept_text: "This phase involves creating wireframes, mockups, and prototypes to visualize the final product before development begins.",
+            development: "development",
+            development_text: "The actual coding and implementation phase where we bring the design to life with clean, efficient code.",
+            contacts: "#contacts",
+            contacts_text: "I'm interested in freelance opportunities. However, if you have other request or question, don't hesitate to contact me."
+        },
+        ru: {
+            title: "Веб-Дизайнер и Разработчик",
+            subtitle: "Я создаю красивые, функциональные сайты, которые помогают бизнесу расти",
+            contact_btn: "Связаться",
+            home: "#главная",
+            about: "#обо мне",
+            about_text: "Я увлеченный веб-дизайнер и разработчик с опытом работы более 3 лет в создании современных, удобных цифровых решений. Специализируюсь на превращении сложных идей в простые, красивые интерфейсы, с которыми пользователи любят взаимодействовать.",
+            projects_completed: "Завершенных проектов",
+            years_experience: "Лет опыта",
+            client_satisfaction: "Удовлетворенность клиентов",
+            skills: "#навыки",
+            design_tools: "Инструменты дизайна",
+            development_tools: "Разработка",
+            projects: "#проекты",
+            project1_title: "Карточки для маркетплейса",
+            project1_desc: "Современное улучшение дизайна для различных магазинов маркетплейса.",
+            project3_title: "Портфолио",
+            project3_desc: "Вы сейчас здесь.",
+            project2_title: "Оформление статьи",
+            project2_desc: "Оформление научной статьи в стиле социальных сетей.",
+            project4_title: "Реклама для академии",
+            project4_desc: "Тестовый проект для рекламы академии боевых пельменей.",
+            project5_title: "Презентация для Альфа-Банка",
+            project5_desc: "Презентация для демонстрации кейса на выступлении для Альфа банка.",
+            project6_title: "Сайт по демонтажным работам",
+            project6_desc: "Сайт для компании по демонтажным и земельным работам.",
+            view_project: "Посмотреть проект",
+            process: "#процесс",
+            brief: "Бриф",
+            brief_text: "Здесь мы обсуждаем требования к проекту, цели и первоначальные идеи с клиентом, чтобы определить четкое направление проекта.",
+            analysis: "Анализ",
+            analysis_text: "Здесь мы проводим исследование рынка, анализ конкурентов и технико-экономическое обоснование, чтобы обосновать наши дизайнерские решения.",
+            concept: "Концепция",
+            concept_text: "На этом этапе создаются каркасы, макеты и прототипы для визуализации конечного продукта перед началом разработки.",
+            development: "Разработка",
+            development_text: "Фаза непосредственного кодирования и реализации, где мы воплощаем дизайн в жизнь с помощью чистого, эффективного кода.",
+            contacts: "#контакты",
+            contacts_text: "Я заинтересован в фрилансе. Однако, если у вас есть другие запросы или вопросы, не стесняйтесь связаться со мной."
+        }
+    };
+
+    const currentLang = localStorage.getItem('lang') || 'ru';
+    translatePage(currentLang);
+    document.querySelector('.current-lang').textContent = currentLang.toUpperCase();
+
+    // Подсветка активного языка
+    languageLinks.forEach(link => {
+        const lang = link.getAttribute('data-lang');
+        link.classList.toggle('selected', lang === currentLang);
+    });
+
+    languageLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const lang = link.getAttribute('data-lang');
+
+            // Сохраняем
+            localStorage.setItem('lang', lang);
+            translatePage(lang);
+            languageSwitcher.querySelector('.current-lang').textContent = lang.toUpperCase();
+
+            languageLinks.forEach(l => {
+                l.classList.toggle('selected', l.getAttribute('data-lang') === lang);
+            });
+        });
+    });
+
+
+    function translatePage(lang) {
+        const elements = document.querySelectorAll('.translate');
+
+        elements.forEach(element => {
+            const key = element.getAttribute('data-key');
+            if (translations[lang] && translations[lang][key]) {
+                if (element.querySelector('.sharp')) {
+                    // Preserve the <span class="sharp">#</span> and only update the text after it
+                    const textAfterSharp = translations[lang][key].replace(/^#/, '');
+                    element.innerHTML = `<span class="sharp">#</span>${textAfterSharp}`;
+                } else {
+                    element.textContent = translations[lang][key];
+                }
+            }
+        });
+    }
+
+    // // Particles
+    // for (let i = 0; i < 60; i++) {
+    // const particle = document.createElement('div');
+    // particle.classList.add('particle');
+
+    // // Случайное начальное положение
+    // particle.style.left = `${Math.random() * 100}%`;
+    // particle.style.top = `${Math.random() * 100}%`;
+
+    // // Случайная задержка анимации
+    // particle.style.animationDelay = `${Math.random() * 5}s`;
+
+    // // Случайный размер
+    // const size = 2 + Math.random() * 3;
+    // particle.style.width = `${size}px`;
+    // particle.style.height = `${size}px`;
+
+    // // Случайная прозрачность
+    // particle.style.opacity = 0.3 + Math.random() * 0.7;
+
+    // document.getElementById('particles').appendChild(particle);
+    // }
+
+    // // Particles parallax
+    // window.addEventListener('scroll', () => {
+    //     const particles = document.getElementById('particles');
+    //     if (particles) {
+    //         particles.style.transform = `translateY(${window.scrollY * 0.2}px)`;
+    //     }
+    // });
+
+    // Theme toggle with ripple effect
+    const themeToggle = document.querySelector('.theme-toggle');
+    const moonIcon = document.querySelector('.moon-icon');
+    const sunIcon = document.querySelector('.sun-icon');
+    const overlay = document.getElementById('themeOverlay');
+    const toggleButton = document.querySelector('.theme-toggle');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (savedTheme === 'light') {
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'block';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        // Обновляем цвет overlay на новый (цвет новой темы)
+        document.documentElement.setAttribute('data-theme', newTheme);
+        const computedStyle = getComputedStyle(document.documentElement);
+        const newBg = computedStyle.getPropertyValue('--primary-color').trim();
+        overlay.style.background = newBg;
+        document.documentElement.setAttribute('data-theme', currentTheme); // возвращаем обратно до смены
+
+        const buttonRect = toggleButton.getBoundingClientRect();
+        const centerX = buttonRect.left + buttonRect.width / 2;
+        const centerY = buttonRect.top + buttonRect.height / 2;
+
+        overlay.style.left = '0';
+        overlay.style.top = '0';
+        overlay.style.clipPath = `circle(0% at ${centerX}px ${centerY}px)`;
+        overlay.style.opacity = '0.2';
+        overlay.style.transition = 'none';
+
+        requestAnimationFrame(() => {
+            overlay.style.transition = 'clip-path 0.6s ease-in-out, opacity 0.3s ease 0.9s';
+            overlay.style.clipPath = `circle(150% at ${centerX}px ${centerY}px)`;
+        });
+
+        setTimeout(() => {
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            if (newTheme === 'light') {
+                moonIcon.style.display = 'none';
+                sunIcon.style.display = 'block';
+            } else {
+                moonIcon.style.display = 'block';
+                sunIcon.style.display = 'none';
+            }
+        }, 222);
+
+        setTimeout(() => {
+            overlay.style.opacity = '0';
+        }, 0);
+    });
+
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        const heroTitle = document.querySelector('.hero h1');
+        const heroSubtitle = document.querySelector('.hero p');
+
+        if (heroTitle && heroSubtitle) {
+            heroTitle.style.transform = `translateY(${scrollY * 0.3}px)`;
+            heroSubtitle.style.transform = `translateY(${scrollY * 0.5}px)`;
+        }
+    });
+
+
+    // Fade parallax
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+    // import * as THREE from 'https://cdn.skypack.dev/three@0.152.2';
+
+    // создаём сцену
+    const canvas = document.getElementById('bgScene');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
+    camera.position.z = 5;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    window.addEventListener('resize', () => {
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+    });
+
+    const stars = new THREE.Group();
+    scene.add(stars);
+
+    const geometry = new THREE.SphereGeometry(0.02, 12, 12);
+    const material = new THREE.MeshBasicMaterial({ color: 0xae81ff });
+
+    for (let i = 0; i < 500; i++) {
+        const star = new THREE.Mesh(geometry, material);
+        star.position.set(
+            (Math.random() - 0.5) * 50,
+            (Math.random() - 0.5) * 50,
+            (Math.random() - 0.5) * 50
+        );
+        stars.add(star);
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        stars.rotation.y += 0.0002;
+        stars.rotation.x += 0.0001;
+        renderer.render(scene, camera);
+    }
+    animate();
+</script>
