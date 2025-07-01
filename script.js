@@ -3,7 +3,7 @@ const processSteps = document.querySelectorAll('.process-step');
 
 processSteps.forEach(step => {
     const header = step.querySelector('.process-header');
-    
+
     header.addEventListener('click', () => {
         // Close all other steps
         processSteps.forEach(otherStep => {
@@ -11,7 +11,7 @@ processSteps.forEach(step => {
                 otherStep.classList.remove('active');
             }
         });
-        
+
         // Toggle current step
         step.classList.toggle('active');
     });
@@ -19,13 +19,13 @@ processSteps.forEach(step => {
 
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        
+
         const targetId = this.getAttribute('href');
         const targetElement = document.querySelector(targetId);
         const headerHeight = document.querySelector('header').offsetHeight;
-        
+
         if (targetElement) {
             window.scrollTo({
                 top: targetElement.offsetTop - headerHeight,
@@ -141,7 +141,7 @@ languageLinks.forEach(link => {
 
 function translatePage(lang) {
     const elements = document.querySelectorAll('.translate');
-    
+
     elements.forEach(element => {
         const key = element.getAttribute('data-key');
         if (translations[lang] && translations[lang][key]) {
@@ -158,25 +158,25 @@ function translatePage(lang) {
 
 // Particles
 for (let i = 0; i < 60; i++) {
-const particle = document.createElement('div');
-particle.classList.add('particle');
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
 
-// Случайное начальное положение
-particle.style.left = `${Math.random() * 100}%`;
-particle.style.top = `${Math.random() * 100}%`;
+    // Случайное начальное положение
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
 
-// Случайная задержка анимации
-particle.style.animationDelay = `${Math.random() * 5}s`;
+    // Случайная задержка анимации
+    particle.style.animationDelay = `${Math.random() * 5}s`;
 
-// Случайный размер
-const size = 2 + Math.random() * 3;
-particle.style.width = `${size}px`;
-particle.style.height = `${size}px`;
+    // Случайный размер
+    const size = 2 + Math.random() * 3;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
 
-// Случайная прозрачность
-particle.style.opacity = 0.3 + Math.random() * 0.7;
+    // Случайная прозрачность
+    particle.style.opacity = 0.3 + Math.random() * 0.7;
 
-document.getElementById('particles').appendChild(particle);
+    document.getElementById('particles').appendChild(particle);
 }
 
 // Particles parallax
