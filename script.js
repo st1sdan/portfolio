@@ -55,8 +55,16 @@ const translations = {
     en: {
         title: "Web Designer And Developer",
         subtitle: "I create beautiful, functional websites that help businesses grow",
-        contact_btn: "Contact Me (Telegram)",
+        contact_btn: "Contact Me",
         home: "#home",
+        about: "#about",
+        about_text: "I'm a passionate web designer and developer with 3+ years of experience creating modern, user-friendly digital experiences. I specialize in turning complex ideas into simple, beautiful interfaces that users love to interact with.",
+        projects_completed: "Projects Completed",
+        years_experience: "Years Experience",
+        client_satisfaction: "Client Satisfaction",
+        skills: "#skills",
+        design_tools: "Design Tools",
+        development_tools: "Development",
         projects: "#projects",
         project1_title: "Marketplace cards",
         project1_desc: "A modern upgrade for various shops on marketplaces.",
@@ -68,6 +76,8 @@ const translations = {
         project4_desc: "Test project for academy.",
         project5_title: "Presentation for Alpha Bank",
         project5_desc: "Idea presentation for Alpha Bank case presentation.",
+        project6_title: " Website for demolition work",
+        project6_desc: " Website for demolition and land works company.",
         view_project: "View project",
         process: "#process",
         brief: "brief",
@@ -84,8 +94,16 @@ const translations = {
     ru: {
         title: "Веб-Дизайнер и Разработчик",
         subtitle: "Я создаю красивые, функциональные сайты, которые помогают бизнесу расти",
-        contact_btn: "Связаться (телеграмм)",
+        contact_btn: "Связаться",
         home: "#главная",
+        about: "#обо мне",
+        about_text: "Я увлеченный веб-дизайнер и разработчик с опытом работы более 3 лет в создании современных, удобных цифровых решений. Специализируюсь на превращении сложных идей в простые, красивые интерфейсы, с которыми пользователи любят взаимодействовать.",
+        projects_completed: "Завершенных проектов",
+        years_experience: "Лет опыта",
+        client_satisfaction: "Удовлетворенность клиентов",
+        skills: "#навыки",
+        design_tools: "Инструменты дизайна",
+        development_tools: "Разработка",
         projects: "#проекты",
         project1_title: "Карточки для маркетплейса",
         project1_desc: "Современное улучшение дизайна для различных магазинов маркетплейса.",
@@ -97,6 +115,8 @@ const translations = {
         project4_desc: "Тестовый проект для рекламы академии боевых пельменей.",
         project5_title: "Презентация для Альфа-Банка",
         project5_desc: "Презентация для демонстрации кейса на выступлении для Альфа банка.",
+        project6_title: "Сайт по демонтажным работам",
+        project6_desc: "Сайт для компании по демонтажным и земельным работам.",
         view_project: "Посмотреть проект",
         process: "#процесс",
         brief: "Бриф",
@@ -156,36 +176,36 @@ function translatePage(lang) {
     });
 }
 
-// Particles
-for (let i = 0; i < 60; i++) {
-    const particle = document.createElement('div');
-    particle.classList.add('particle');
+// // Particles
+// for (let i = 0; i < 60; i++) {
+// const particle = document.createElement('div');
+// particle.classList.add('particle');
 
-    // Случайное начальное положение
-    particle.style.left = `${Math.random() * 100}%`;
-    particle.style.top = `${Math.random() * 100}%`;
+// // Случайное начальное положение
+// particle.style.left = `${Math.random() * 100}%`;
+// particle.style.top = `${Math.random() * 100}%`;
 
-    // Случайная задержка анимации
-    particle.style.animationDelay = `${Math.random() * 5}s`;
+// // Случайная задержка анимации
+// particle.style.animationDelay = `${Math.random() * 5}s`;
 
-    // Случайный размер
-    const size = 2 + Math.random() * 3;
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
+// // Случайный размер
+// const size = 2 + Math.random() * 3;
+// particle.style.width = `${size}px`;
+// particle.style.height = `${size}px`;
 
-    // Случайная прозрачность
-    particle.style.opacity = 0.3 + Math.random() * 0.7;
+// // Случайная прозрачность
+// particle.style.opacity = 0.3 + Math.random() * 0.7;
 
-    document.getElementById('particles').appendChild(particle);
-}
+// document.getElementById('particles').appendChild(particle);
+// }
 
-// Particles parallax
-window.addEventListener('scroll', () => {
-    const particles = document.getElementById('particles');
-    if (particles) {
-        particles.style.transform = `translateY(${window.scrollY * 0.2}px)`;
-    }
-});
+// // Particles parallax
+// window.addEventListener('scroll', () => {
+//     const particles = document.getElementById('particles');
+//     if (particles) {
+//         particles.style.transform = `translateY(${window.scrollY * 0.2}px)`;
+//     }
+// });
 
 // Theme toggle with ripple effect
 const themeToggle = document.querySelector('.theme-toggle');
@@ -310,4 +330,4 @@ function animate() {
     stars.rotation.x += 0.0001;
     renderer.render(scene, camera);
 }
-animate();
+animate(); 
