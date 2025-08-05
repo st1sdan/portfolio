@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Микросайты Stisdan: быстрые и эффективные веб-решения">
+    <meta name="keywords" content="микросайты, лендинги, веб-разработка, Stisdan">
+    <title>Микросайты - Stisdan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200;250;300&display=swap" rel="stylesheet">
+    <script src="three.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+    <canvas id="bgScene" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;"></canvas>
+    <div class="theme-overlay" id="themeOverlay"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo pulse-glow">
+                <a href="index.html" style="text-decoration: none; color: inherit;">stisdan</a>
+                <svg class="star" viewBox="0 0 24 24">
+                    <path fill="#ae81ff"
+                        d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+                </svg>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#home">#home</a></li>
+                    <li><a href="index.html#about">#about</a></li>
+                    <li><a href="index.html#skills">#skills</a></li>
+                    <li><a href="index.html#projects">#projects</a></li>
+                    <li><a href="index.html#process">#process</a></li>
+                    <li><a href="index.html#contacts">#contacts</a></li>
+                    <li><a href="microsites.html" class="active">#microsites</a></li>
+                    <li class="language-switcher">
+                        <span class="current-lang">RU</span>
+                        <div class="language-dropdown">
+                            <a href="#" data-lang="ru" class="selected">RU</a>
+                            <a href="#" data-lang="en">EN</a>
+                        </div>
+                    </li>
+                    <li>
+                        <button class="theme-toggle" aria-label="Toggle theme">
+                            <svg class="theme-icon" viewBox="0 0 24 24">
+                                <path class="moon-icon" fill="currentColor"
+                                    d="M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z" />
+                                <path class="sun-icon" fill="currentColor"
+                                    d="M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7L12,7z M12,2L12,2L12,2L12,2L12,2z M12,22L12,22L12,22L12,22L12,22z M5.64,7.05L5.64,7.05L5.64,7.05L5.64,7.05L5.64,7.05z M18.36,17L18.36,17L18.36,17L18.36,17L18.36,17z M2,12L2,12L2,12L2,12L2,12z M22,12L22,12L22,12L22,12L22,12z M5.64,16.95L5.64,16.95L5.64,16.95L5.64,16.95L5.64,16.95z M18.36,7.05L18.36,7.05L18.36,7.05L18.36,7.05L18.36,7.05z"
+                                    style="display: none;" />
+                            </svg>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="hero microsites-hero">
+            <h1 class="fade-in-up">Микросайты</h1>
+            <p class="fade-in-up">Мои интересные веб-проекты и эксперименты</p>
+            <div class="hero-stats fade-in-up">
+                <div class="stat">
+                    <span class="stat-number">10+</span>
+                    <span class="stat-label">Проектов</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">5+</span>
+                    <span class="stat-label">Технологий</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Креативность</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="microsites-intro">
+            <div class="intro-content">
+                <h2 class="section-title fade-in-up">
+                    <span class="sharp">#</span>Что такое микросайты?
+                </h2>
+                <div class="intro-grid">
+                    <div class="intro-card fade-in-up">
+                        <div class="intro-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z" />
+                            </svg>
+                        </div>
+                        <h3>Эксперименты</h3>
+                        <p>Изучение новых технологий и подходов в веб-разработке</p>
+                    </div>
+                    <div class="intro-card fade-in-up">
+                        <div class="intro-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z" />
+                            </svg>
+                        </div>
+                        <h3>Креативность</h3>
+                        <p>Уникальные идеи и нестандартные решения</p>
+                    </div>
+                    <div class="intro-card fade-in-up">
+                        <div class="intro-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z" />
+                            </svg>
+                        </div>
+                        <h3>Практика</h3>
+                        <p>Применение навыков в реальных проектах</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="microsites-gallery">
+            <h2 class="section-title fade-in-up">
+                <span class="sharp">#</span>Мои проекты
+            </h2>
+            <div class="gallery-grid">
+                <!-- Проект 1 -->
+                <div class="microsite-card fade-in-up" data-category="utility">
+                    <div class="microsite-preview">
+                        <div class="preview-placeholder">
+                            <div class="preview-content">
+                                <div class="preview-header">
+                                    <div class="preview-dots">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div class="preview-body">
+                                    <div class="preview-element"></div>
+                                    <div class="preview-element"></div>
+                                    <div class="preview-element"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="microsite-overlay">
+                            <div class="overlay-content">
+                                <span class="microsite-type">Утилита</span>
+                                <span class="microsite-tech">HTML/CSS/JS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="microsite-info">
+                        <h3>Notepad</h3>
+                        <p>Простой и элегантный блокнот для быстрых заметок</p>
+                        <div class="microsite-features">
+                            <span class="feature">Локальное хранение</span>
+                            <span class="feature">Автосохранение</span>
+                            <span class="feature">Минимализм</span>
+                        </div>
+                        <a href="https://st1sdan.github.io/notepad" target="_blank" class="microsite-link">Открыть
+                            проект</a>
+                    </div>
+                </div>
+
+                <!-- Проект 2 -->
+                <div class="microsite-card fade-in-up" data-category="game">
+                    <div class="microsite-preview">
+                        <div class="preview-placeholder event-theme">
+                            <div class="preview-content">
+                                <div class="preview-header">
+                                    <div class="preview-dots">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div class="preview-body">
+                                    <div class="preview-element event-element"></div>
+                                    <div class="preview-element event-element"></div>
+                                    <div class="preview-element event-element"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="microsite-overlay">
+                            <div class="overlay-content">
+                                <span class="microsite-type">Игра</span>
+                                <span class="microsite-tech">Canvas/JS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="microsite-info">
+                        <h3>Snake Game</h3>
+                        <p>Классическая игра "Змейка" с современным дизайном</p>
+                        <div class="microsite-features">
+                            <span class="feature">Canvas API</span>
+                            <span class="feature">Счетчик очков</span>
+                            <span class="feature">Адаптивность</span>
+                        </div>
+                        <a href="#" class="microsite-link">Скоро</a>
+                    </div>
+                </div>
+
+                <!-- Проект 3 -->
+                <div class="microsite-card fade-in-up" data-category="tool">
+                    <div class="microsite-preview">
+                        <div class="preview-placeholder portfolio-theme">
+                            <div class="preview-content">
+                                <div class="preview-header">
+                                    <div class="preview-dots">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div class="preview-body">
+                                    <div class="preview-element portfolio-element"></div>
+                                    <div class="preview-element portfolio-element"></div>
+                                    <div class="preview-element portfolio-element"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="microsite-overlay">
+                            <div class="overlay-content">
+                                <span class="microsite-type">Инструмент</span>
+                                <span class="microsite-tech">React</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="microsite-info">
+                        <h3>Color Palette</h3>
+                        <p>Генератор цветовых палитр для дизайнеров</p>
+                        <div class="microsite-features">
+                            <span class="feature">Генерация палитр</span>
+                            <span class="feature">Экспорт цветов</span>
+                            <span class="feature">Анализ контраста</span>
+                        </div>
+                        <a href="#" class="microsite-link">В разработке</a>
+                    </div>
+                </div>
+
+                <!-- Проект 4 -->
+                <div class="microsite-card fade-in-up" data-category="experiment">
+                    <div class="microsite-preview">
+                        <div class="preview-placeholder business-theme">
+                            <div class="preview-content">
+                                <div class="preview-header">
+                                    <div class="preview-dots">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div class="preview-body">
+                                    <div class="preview-element business-element"></div>
+                                    <div class="preview-element business-element"></div>
+                                    <div class="preview-element business-element"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="microsite-overlay">
+                            <div class="overlay-content">
+                                <span class="microsite-type">Эксперимент</span>
+                                <span class="microsite-tech">Three.js</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="microsite-info">
+                        <h3>3D Particles</h3>
+                        <p>Интерактивная 3D сцена с частицами</p>
+                        <div class="microsite-features">
+                            <span class="feature">WebGL</span>
+                            <span class="feature">Интерактивность</span>
+                            <span class="feature">Анимации</span>
+                        </div>
+                        <a href="#" class="microsite-link">Скоро</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="microsites-process">
+            <h2 class="section-title fade-in-up">
+                <span class="sharp">#</span>Процесс создания
+            </h2>
+            <div class="process-timeline">
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h3>Идея</h3>
+                        <p>Появление интересной идеи или изучение новой технологии</p>
+                        <span class="timeline-time">Момент</span>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h3>Прототип</h3>
+                        <p>Быстрое создание прототипа для проверки концепции</p>
+                        <span class="timeline-time">1-2 дня</span>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h3>Разработка</h3>
+                        <p>Полная реализация функционала и дизайна</p>
+                        <span class="timeline-time">3-7 дней</span>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h3>Публикация</h3>
+                        <p>Размещение на GitHub Pages и добавление в портфолио</p>
+                        <span class="timeline-time">1 день</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="microsites-cta">
+            <div class="cta-content fade-in-up">
+                <h2>Хотите увидеть больше проектов?</h2>
+                <p>Изучите мое портфолио или свяжитесь со мной для обсуждения идей</p>
+                <div class="cta-buttons">
+                    <a href="index.html#projects" class="cta-btn primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20px" height="20px">
+                            <path fill="currentColor"
+                                d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z" />
+                        </svg>
+                        Портфолио
+                    </a>
+                    <a href="index.html#contacts" class="cta-btn secondary">Связаться</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>2025. All rights reserved. Made by stisdan</p>
+        </div>
+    </footer>
+</body>
+
+</html>

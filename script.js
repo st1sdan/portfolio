@@ -330,4 +330,195 @@ function animate() {
     stars.rotation.x += 0.0001;
     renderer.render(scene, camera);
 }
-animate(); 
+animate();
+
+// ===== JAVASCRIPT ДЛЯ СТРАНИЦЫ МИКРОСАЙТОВ =====
+
+// Анимация чисел в статистике
+function animateNumbers() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+
+    statNumbers.forEach(stat => {
+        const target = stat.textContent;
+        const isTime = target.includes('ч');
+        const isPrice = target.includes('₽');
+        const isPercent = target.includes('%');
+
+        let numericValue;
+        if (isTime) {
+            numericValue = parseInt(target.replace('ч', ''));
+        } else if (isPrice) {
+            numericValue = parseInt(target.replace(/[^\d]/g, ''));
+        } else if (isPercent) {
+            numericValue = parseInt(target.replace('%', ''));
+        } else {
+            numericValue = parseInt(target);
+        }
+
+        let current = 0;
+        const increment = numericValue / 50;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= numericValue) {
+                current = numericValue;
+                clearInterval(timer);
+            }
+
+            if (isTime) {
+                stat.textContent = Math.floor(current) + 'ч';
+            } else if (isPrice) {
+                stat.textContent = Math.floor(current) + ' ₽';
+            } else if (isPercent) {
+                stat.textContent = Math.floor(current) + '%';
+            } else {
+                stat.textContent = Math.floor(current);
+            }
+        }, 30);
+    });
+}
+
+// Анимация карточек микросайтов
+function initMicrositeCards() {
+    const cards = document.querySelectorAll('.microsite-card');
+
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) scale(1)';
+        });
+
+        // Анимация при клике
+        card.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('microsite-link')) {
+                const ripple = document.createElement('div');
+                ripple.classList.add('ripple');
+                card.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            }
+        });
+    });
+}
+
+// Анимация временной шкалы
+function initTimelineAnimation() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateX(0)';
+            }
+        });
+    }, { threshold: 0.3 });
+
+    timelineItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-50px)';
+        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        timelineObserver.observe(item);
+    });
+}
+
+// Плавная прокрутка для внутренних ссылок на странице микросайтов
+function initSmoothScrolling() {
+    const links = document.querySelectorAll('a[href^="#"]');
+
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const targetId = link.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const targetPosition = targetElement.offsetTop - headerHeight;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// Анимация кнопок CTA
+function initCTAAnimations() {
+    const ctaButtons = document.querySelectorAll('.cta-btn');
+
+    ctaButtons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            button.style.transform = 'translateY(-2px)';
+            button.style.boxShadow = '0 8px 25px rgba(174, 129, 255, 0.3)';
+        });
+
+        button.addEventListener('mouseleave', () => {
+            button.style.transform = 'translateY(0)';
+            button.style.boxShadow = '0 4px 15px rgba(174, 129, 255, 0.2)';
+        });
+
+        // Эффект пульсации для основной кнопки
+        if (button.classList.contains('primary')) {
+            setInterval(() => {
+                button.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                }, 200);
+            }, 3000);
+        }
+    });
+}
+
+
+
+// Эффект ripple для кнопок
+function initRippleEffect() {
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('microsite-link') || e.target.classList.contains('cta-btn')) {
+            const button = e.target;
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+
+            button.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+    });
+}
+
+// Инициализация всех функций для страницы микросайтов
+function initMicrositesPage() {
+    // Проверяем, находимся ли мы на странице микросайтов
+    if (window.location.pathname.includes('microsites.html') || document.querySelector('.microsites-hero')) {
+        // Запускаем анимацию чисел после загрузки страницы
+        setTimeout(animateNumbers, 500);
+
+        // Инициализируем остальные функции
+        initMicrositeCards();
+        initTimelineAnimation();
+        initSmoothScrolling();
+        initCTAAnimations();
+        initRippleEffect();
+    }
+}
+
+// Запускаем инициализацию после загрузки DOM
+document.addEventListener('DOMContentLoaded', initMicrositesPage); 
