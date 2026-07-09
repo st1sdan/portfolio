@@ -3,880 +3,473 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Портфолио веб-дизайнера Stisdan: создание современных сайтов для бизнеса">
-    <meta name="keywords" content="веб-дизайн, разработка сайтов, UX/UI">
-    <title>Stisdan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200;250;300&display=swap" rel="stylesheet">
-    <script src="three.min.js"></script>
+    <meta name="description" content="Portfolio of Stisdan: web design, micro-projects and games. Client websites, small web tools and playable projects on itch.io.">
+    <meta name="author" content="Stisdan">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://st1sdan.github.io/portfolio/">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>Stisdan · Portfolio</title>
+
+    <!-- Open Graph / social preview. For a nicer card, add a dedicated 1200x630 Images/og-preview.png and point og:image/twitter:image at it -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Stisdan">
+    <meta property="og:title" content="Stisdan · web design, micro-projects & games">
+    <meta property="og:description" content="A collection of client work, small web toys and playable projects, all in one place.">
+    <meta property="og:url" content="https://st1sdan.github.io/portfolio/">
+    <meta property="og:image" content="https://st1sdan.github.io/portfolio/Images/Portfolio.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stisdan · web design, micro-projects & games">
+    <meta name="twitter:description" content="A collection of client work, small web toys and playable projects, all in one place.">
+    <meta name="twitter:image" content="https://st1sdan.github.io/portfolio/Images/Portfolio.webp">
+    <meta name="theme-color" content="#e9e3d6">
+
+    <!-- Structured data for search engines (TODO: set real url) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Stisdan",
+        "url": "https://st1sdan.github.io/portfolio/",
+        "jobTitle": "Web designer & developer",
+        "sameAs": [
+            "https://st1sdan.itch.io/",
+            "https://t.me/stisdan"
+        ],
+        "knowsAbout": ["Web design", "UX/UI", "Front-end development", "Game development"]
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
 </head>
 
-<body>
-
-    <canvas id="bgScene" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;"></canvas>
-    <div class="theme-overlay" id="themeOverlay"></div>
-    <div class="container">
-        <header>
-            <div class="logo pulse-glow">
-                <a href="#" style="text-decoration: none; color: inherit;">stisdan</a>
-                <svg class="star" viewBox="0 0 24 24">
-                    <path fill="#ae81ff"
-                        d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-                </svg>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#home" class="translate" data-key="home">#home</a></li>
-                    <li><a href="#about" class="translate" data-key="about">#about</a></li>
-                    <li><a href="#skills" class="translate" data-key="skills">#skills</a></li>
-                    <li><a href="#projects" class="translate" data-key="projects">#projects</a></li>
-                    <li><a href="#process" class="translate" data-key="process">#process</a></li>
-                    <li><a href="#contacts" class="translate" data-key="contacts">#contacts</a></li>
-                    <li><a href="microsites.html">#microsites</a></li>
-                    <li class="language-switcher">
-                        <span class="current-lang">EN</span>
-                        <div class="language-dropdown">
-                            <a href="#" data-lang="en" class="selected">EN</a>
-                            <a href="#" data-lang="ru">RU</a>
-                        </div>
-                    </li>
-                    <li>
-                        <button class="theme-toggle" aria-label="Toggle theme">
-                            <svg class="theme-icon" viewBox="0 0 24 24">
-                                <!-- Иконка луны (темная тема) -->
-                                <path class="moon-icon" fill="currentColor"
-                                    d="M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z" />
-                                <!-- Иконка солнца (светлая тема) - скрыта по умолчанию -->
-                                <path class="sun-icon" fill="currentColor"
-                                    d="M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7L12,7z M12,2L12,2L12,2L12,2L12,2z M12,22L12,22L12,22L12,22L12,22z M5.64,7.05L5.64,7.05L5.64,7.05L5.64,7.05L5.64,7.05z M18.36,17L18.36,17L18.36,17L18.36,17L18.36,17z M2,12L2,12L2,12L2,12L2,12z M22,12L22,12L22,12L22,12L22,12z M5.64,16.95L5.64,16.95L5.64,16.95L5.64,16.95L5.64,16.95z M18.36,7.05L18.36,7.05L18.36,7.05L18.36,7.05L18.36,7.05z"
-                                    style="display: none;" />
-                            </svg>
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-
-        <section id="home" class="hero">
-            <div class="hero">
-                <!-- <div class="particles" id="particles"></div> -->
-                <h1 class="translate" data-key="title">Web Designer And Developer</h1>
-                <p class="translate" data-key="subtitle">I create beautiful, functional websites that help businesses
-                    grow</p>
-                <a target="_blank" href="https://t.me/stisdan">
-                    <b class="contact-btn translate">
-                        Связаться
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20px" height="20px"
-                            style="vertical-align: middle; margin-left: 6px">
-                            <path
-                                d="M25,2c12.703,0,23,10.297,23,23S37.703,48,25,48S2,37.703,2,25S12.297,2,25,2z M32.934,34.375	c0.423-1.298,2.405-14.234,2.65-16.783c0.074-0.772-0.17-1.285-0.648-1.514c-0.578-0.278-1.434-0.139-2.427,0.219	c-1.362,0.491-18.774,7.884-19.78,8.312c-0.954,0.405-1.856,0.847-1.856,1.487c0,0.45,0.267,0.703,1.003,0.966	c0.766,0.273,2.695,0.858,3.834,1.172c1.097,0.303,2.346,0.04,3.046-0.395c0.742-0.461,9.305-6.191,9.92-6.693	c0.614-0.502,1.104,0.141,0.602,0.644c-0.502,0.502-6.38,6.207-7.155,6.997c-0.941,0.959-0.273,1.953,0.358,2.351	c0.721,0.454,5.906,3.932,6.687,4.49c0.781,0.558,1.573,0.811,2.298,0.811C32.191,36.439,32.573,35.484,32.934,34.375z" />
-                        </svg>
-                    </b>
-                </a>
-        </section>
-
-        <section id="about">
-            <h2 class="section-title translate fade-in-up" data-key="about"><span class="sharp">#</span>About me</h2>
-            <div class="about-content fade-in-up">
-                <div class="about-text">
-                    <p class="translate" data-key="about_text">I'm a passionate web designer and developer with 3+ years
-                        of experience creating modern, user-friendly digital experiences. I specialize in turning
-                        complex ideas into simple, beautiful interfaces that users love to interact with.</p>
-                    <div class="about-highlights">
-                        <div class="highlight-item">
-                            <span class="highlight-number">15+</span>
-                            <span class="highlight-text translate" data-key="projects_completed">Projects
-                                Completed</span>
-                        </div>
-                        <div class="highlight-item">
-                            <span class="highlight-number">3+</span>
-                            <span class="highlight-text translate" data-key="years_experience">Years Experience</span>
-                        </div>
-                        <div class="highlight-item">
-                            <span class="highlight-number">100%</span>
-                            <span class="highlight-text translate" data-key="client_satisfaction">Client
-                                Satisfaction</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="image-container">
-                        <img src="Images/Portfolio.webp" alt="Stisdan Profile" class="profile-photo">
-                        <div class="image-decoration"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills">
-            <h2 class="section-title translate fade-in-up" data-key="skills"><span class="sharp">#</span>Skills & Tools
-            </h2>
-            <div class="skills-container">
-                <div class="skills-category fade-in-up">
-                    <h3 class="translate" data-key="design_tools">Design Tools</h3>
-                    <div class="skills-grid">
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision"
-                                    text-rendering="geometricPrecision" image-rendering="optimizeQuality"
-                                    fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 346 512.36">
-                                    <g fill-rule="nonzero">
-                                        <path fill="#00B6FF"
-                                            d="M172.53 246.9c0-42.04 34.09-76.11 76.12-76.11h11.01c.3.01.63-.01.94-.01 47.16 0 85.4 38.25 85.4 85.4 0 47.15-38.24 85.39-85.4 85.39-.31 0-.64-.01-.95-.01l-11 .01c-42.03 0-76.12-34.09-76.12-76.12V246.9z" />
-                                        <path fill="#24CB71"
-                                            d="M0 426.98c0-47.16 38.24-85.41 85.4-85.41l87.13.01v84.52c0 47.65-39.06 86.26-86.71 86.26C38.67 512.36 0 474.13 0 426.98z" />
-                                        <path fill="#FF7237"
-                                            d="M172.53.01v170.78h87.13c.3-.01.63.01.94.01 47.16 0 85.4-38.25 85.4-85.4C346 38.24 307.76 0 260.6 0c-.31 0-.64.01-.95.01h-87.12z" />
-                                        <path fill="#FF3737"
-                                            d="M0 85.39c0 47.16 38.24 85.4 85.4 85.4h87.13V.01H85.39C38.24.01 0 38.24 0 85.39z" />
-                                        <path fill="#874FFF"
-                                            d="M0 256.18c0 47.16 38.24 85.4 85.4 85.4h87.13V170.8H85.39C38.24 170.8 0 209.03 0 256.18z" />
-                                    </g>
-                                </svg>
-                            </div>
-                            <span>Figma</span>
-                        </div>
-
-                                                <div class="skill-card">
-                            <div class="skill-icon">
-                                <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 499.77 405.98">
-                                    <defs>
-                                        <style>
-                                            .cls-1 {
-                                                fill: #fff;
-                                            }
-
-                                            .cls-2 {
-                                                fill: #265787;
-                                            }
-
-                                            .cls-3 {
-                                                fill: #ea7600;
-                                            }
-                                        </style>
-                                    </defs>
-                                    <title>blender</title>
-                                    <path class="cls-1"
-                                        d="M196.49,225.35c1.82-32.49,17.73-61.11,41.73-81.4,23.54-19.92,55.22-32.1,89.78-32.1S394.21,124,417.77,144c24,20.29,39.89,48.91,41.73,81.37,1.82,33.38-11.6,64.39-35.14,87.37-24,23.38-58.13,38.06-96.36,38.06s-72.43-14.68-96.41-38.06C208,289.71,194.66,258.7,196.49,225.35Z" />
-                                    <path class="cls-2"
-                                        d="M260.53,228.27c.93-16.67,9.1-31.36,21.41-41.77a72.65,72.65,0,0,1,92.13,0c12.3,10.41,20.47,25.1,21.41,41.75.93,17.13-6,33-18,44.83-12.31,12-29.83,19.53-49.44,19.53s-37.16-7.53-49.47-19.53C266.45,261.29,259.59,245.38,260.53,228.27Z" />
-                                    <path class="cls-3"
-                                        d="M153.08,262c.11,6.52,2.19,19.2,5.31,29.1a153.58,153.58,0,0,0,33.16,57.42,171.34,171.34,0,0,0,58,41.67A189.71,189.71,0,0,0,402,389.88,172.65,172.65,0,0,0,460,348a154.79,154.79,0,0,0,33.15-57.53,145.39,145.39,0,0,0,6.24-32.11,146.87,146.87,0,0,0-1-31.9,148.49,148.49,0,0,0-21.15-57.87,161.49,161.49,0,0,0-38.58-42.53l0,0L282.5,6.2c-.14-.11-.26-.22-.41-.32-10.24-7.86-27.47-7.83-38.73,0s-12.69,21.14-2.56,29.46l0,0,65.11,53-198.46.21h-.27C90.74,88.61,75,99.37,71.85,113c-3.21,13.86,7.93,25.36,25,25.42l0,.06,100.6-.19L17.9,276l-.69.51C.28,289.52-5.2,311.08,5.47,324.73c10.82,13.87,33.84,13.9,51,.08l98-80.18A152.15,152.15,0,0,0,153.08,262ZM404.82,298.2c-20.18,20.56-48.44,32.22-79,32.28s-58.89-11.5-79.07-32a93.92,93.92,0,0,1-21.58-33.78,87.69,87.69,0,0,1-5-37.74A89.11,89.11,0,0,1,231,191.39a98,98,0,0,1,24-28.55c19.62-16,44.6-24.65,70.73-24.68s51.12,8.54,70.76,24.48a97.5,97.5,0,0,1,24,28.46,89.19,89.19,0,0,1,10.86,35.52,87.81,87.81,0,0,1-5,37.72A94.33,94.33,0,0,1,404.82,298.2Z" />
-                                </svg>
-                            </div>
-                            <span>Blender</span>
-                        </div>
-
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.76 498.97">
-                                    <defs>
-                                        <style>
-                                            .a {
-                                                fill: #001e36;
-                                            }
-
-                                            .b {
-                                                fill: #31a8ff;
-                                            }
-                                        </style>
-                                    </defs>
-                                    <title>adobe-photoshop</title>
-                                    <rect class="a" width="511.76" height="498.97" rx="90.62" />
-                                    <path class="b"
-                                        d="M115.24,349.91V130.53c0-1.59.68-2.4,2.06-2.4,3.65,0,7,0,12-.17s10.47-.23,16.31-.34l18.54-.35q9.78-.17,19.39-.17,26.09,0,44,6.52a76.4,76.4,0,0,1,28.66,17.51,67.06,67.06,0,0,1,15.62,24.21A80.31,80.31,0,0,1,276.61,203q0,27.48-12.7,45.32a71.82,71.82,0,0,1-34.33,25.92c-14.42,5.38-30.45,7.2-48.07,7.2-5,0-8.58-.05-10.64-.17s-5.15-.17-9.27-.17v68.49a2.72,2.72,0,0,1-2.32,3.09,2.49,2.49,0,0,1-.77,0H117.64C116,352.65,115.24,351.74,115.24,349.91ZM161.6,169.33v71.55q4.46.35,8.24.34h11.33a80.56,80.56,0,0,0,24.55-3.92A37,37,0,0,0,223.23,226q6.69-7.89,6.69-22a34.74,34.74,0,0,0-5-18.88A32,32,0,0,0,210,172.93,63.68,63.68,0,0,0,185,168.64q-8.25,0-14.59.17t-8.76.52Z" />
-                                    <path class="b"
-                                        d="M409.35,227.87a80,80,0,0,0-20.43-7.21,108.28,108.28,0,0,0-23.86-2.75,44.38,44.38,0,0,0-12.87,1.55,11.55,11.55,0,0,0-6.7,4.29,10.79,10.79,0,0,0-1.71,5.84,9.08,9.08,0,0,0,2.06,5.49,23.25,23.25,0,0,0,7.21,5.66,141.8,141.8,0,0,0,15.1,7,150,150,0,0,1,32.79,15.62,50,50,0,0,1,16.82,17.68,47.17,47.17,0,0,1,5,22,49.41,49.41,0,0,1-8.24,28.33,54.23,54.23,0,0,1-23.86,19.05Q375,357.3,352,357.3a140.51,140.51,0,0,1-29-2.75,92.44,92.44,0,0,1-21.8-6.87,4.44,4.44,0,0,1-2.41-4.12V306.49a2,2,0,0,1,.86-1.89,1.66,1.66,0,0,1,1.89.17A91.62,91.62,0,0,0,328,315.24a108.66,108.66,0,0,0,25.07,3.26q12,0,17.68-3.09a9.7,9.7,0,0,0,5.66-8.92q0-4.47-5.15-8.59T350.3,288a126.06,126.06,0,0,1-30.38-15.45,52.42,52.42,0,0,1-16.14-18,47.35,47.35,0,0,1-5-21.8A49.21,49.21,0,0,1,306,206.93a52.37,52.37,0,0,1,22.32-19.57q15.1-7.55,37.76-7.55a167.13,167.13,0,0,1,26.44,1.88,69.58,69.58,0,0,1,18.4,5,3.13,3.13,0,0,1,2.06,1.89,9.31,9.31,0,0,1,.34,2.57v34.68a2.3,2.3,0,0,1-1,2.06A3.33,3.33,0,0,1,409.35,227.87Z" />
-                                </svg>
-                            </div>
-                            <span>Photoshop</span>
-                        </div>
-
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.45 498.66">
-                                    <defs>
-                                        <style>
-                                            .a {
-                                                fill: #300;
-                                            }
-
-                                            .b {
-                                                fill: #ff9a00;
-                                            }
-                                        </style>
-                                    </defs>
-                                    <title>adobe-illustrator</title>
-                                    <rect class="a" width="511.45" height="498.66" rx="90.57" />
-                                    <path class="b"
-                                        d="M247.84,299.26H168.58l-16.12,50.09a4,4,0,0,1-4.12,3.09H108.2q-3.44,0-2.4-3.78L174.42,151q1-3.09,2.06-7a74.51,74.51,0,0,0,1.37-13.9,2.11,2.11,0,0,1,1.8-2.4,2,2,0,0,1,.6,0H234.8c1.6,0,2.51.57,2.75,1.71L315.43,349c.69,2.28,0,3.43-2.06,3.43h-44.6a3.17,3.17,0,0,1-3.43-2.4ZM180.94,256h54.2q-2.05-6.87-4.8-15.44t-5.83-18.36l-6.18-19.55q-3.09-9.78-5.66-18.88T208,167.17h-.34a276.76,276.76,0,0,1-7.21,27.44q-4.8,15.45-9.78,31.57T180.94,256Z" />
-                                    <path class="b"
-                                        d="M361.74,164.08a24.9,24.9,0,0,1-18.87-7.55,27.12,27.12,0,0,1-7.2-19.56,25.17,25.17,0,0,1,7.72-19,26.52,26.52,0,0,1,19-7.38q12.35,0,19.38,7.38a26.52,26.52,0,0,1,7,19,26.78,26.78,0,0,1-7.38,19.56A26.32,26.32,0,0,1,361.74,164.08ZM338.07,349V185c0-2.06.91-3.09,2.74-3.09H383c1.82,0,2.74,1,2.74,3.09V349c0,2.28-.91,3.43-2.74,3.43H341.16C339.1,352.44,338.07,351.29,338.07,349Z" />
-                                </svg>
-                            </div>
-                            <span>Illustrator</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skills-category fade-in-up">
-                    <h3 class="translate" data-key="development_tools">Development</h3>
-                    <div class="skills-grid">
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path fill="#E34F26"
-                                        d="M12,17.56L16.07,16.43L16.62,10.33H9.38L9.2,8.3H16.8L17,6.31H7L7.56,12.32H14.45L14.22,14.9L12,15.5L9.78,14.9L9.64,13.24H7.64L7.93,16.43L12,17.56M4.07,3H19.93L18.5,19.68L12,21.5L5.5,19.68L4.07,3Z" />
-                                </svg>
-                            </div>
-                            <span>HTML5</span>
-                        </div>
-
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path fill="#1572B6"
-                                        d="M5,3L4.35,6.34H17.94L17.5,8.5H3.92L3.26,11.83H16.85L16.09,15.64L10.61,17.45L5.86,15.64L6.19,14H2.85L2.06,18L9.91,21L18.96,18L20.16,11.97L20.4,10.76L21.94,3H5Z" />
-                                </svg>
-                            </div>
-                            <span>CSS3</span>
-                        </div>
-
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path fill="#F7DF1E"
-                                        d="M3,3H21V21H3V3M7.73,18.04C8.13,18.89 8.92,19.59 10.27,19.59C11.77,19.59 12.8,18.79 12.8,17.04V11.26H11.1V17C11.1,17.86 10.75,18.08 10.2,18.08C9.62,18.08 9.38,17.68 9.11,17.21L7.73,18.04M13.71,17.86C14.21,18.84 15.22,19.59 16.8,19.59C18.4,19.59 19.6,18.76 19.6,17.23C19.6,15.82 18.79,15.19 17.35,14.57L16.93,14.39C16.2,14.08 15.89,13.87 15.89,13.37C15.89,12.96 16.2,12.64 16.7,12.64C17.18,12.64 17.5,12.85 17.79,13.37L19.1,12.5C18.55,11.54 17.77,11.17 16.7,11.17C15.19,11.17 14.22,12.13 14.22,13.4C14.22,14.78 15.03,15.43 16.25,15.95L16.67,16.13C17.45,16.47 17.91,16.68 17.91,17.26C17.91,17.74 17.46,18.09 16.76,18.09C15.93,18.09 15.45,17.66 15.09,17.06L13.71,17.86Z" />
-                                </svg>
-                            </div>
-                            <span>JavaScript</span>
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <section id="projects">
-            <h2 class="section-title translate fade-in-up" data-key="projects">
-                <span class="sharp">#</span>Projects
-            </h2>
-            <div class="projects-grid">
-
-                <!-- Сайт по демонтажным работам -->
-                <div class="project-card" data-project="demolition">
-                    <div class="project-img">
-                        <img alt="Демонтажные работы" src="Images/Demontazh.webp">
-                        <div class="project-overlay">
-                            <div class="project-stats">
-                                <span class="stat-item time">
-                                    <svg viewBox="0 0 20 20">
-                                        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="2"
-                                            fill="none" />
-                                        <line x1="10" y1="10" x2="10" y2="5" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                        <line x1="10" y1="10" x2="14" y2="10" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                    </svg>
-                                    <span>2-3 недели</span>
-                                </span>
-                                <span class="stat-item price">
-                                    <svg viewBox="0 0 20 20">
-                                        <path d="M6 4h6a3 3 0 1 1 0 6H6m0 0v6m0-6h7m-7 3h7" stroke="currentColor"
-                                            stroke-width="2" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round" /><text x="2" y="18" font-size="0" />
-                                    </svg>
-                                    <span>45 000</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-header">
-                            <h3 class="translate" data-key="project6_title">Сайт по демонтажным работам</h3>
-                            <div class="project-badges">
-                                <span class="badge badge-primary">Web Development</span>
-                                <span class="badge badge-secondary">Corporate</span>
-                            </div>
-                        </div>
-                        <p class="translate" data-key="project6_desc">
-                            Современный корпоративный сайт для компании, предоставляющей услуги по демонтажным и
-                            земельным работам. Разработан с акцентом на профессиональность и доверие.
-                        </p>
-                        <div class="project-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Технологии:</span>
-                                <span class="detail-value tools-icons">
-                                    <span class="tool-icon" title="HTML5">
-                                        <svg viewBox="0 0 24 24">
-                                            <path fill="#E34F26"
-                                                d="M12,17.56L16.07,16.43L16.62,10.33H9.38L9.2,8.3H16.8L17,6.31H7L7.56,12.32H14.45L14.22,14.9L12,15.5L9.78,14.9L9.64,13.24H7.64L7.93,16.43L12,17.56M4.07,3H19.93L18.5,19.68L12,21.5L5.5,19.68L4.07,3Z" />
-                                        </svg>
-                                    </span>
-                                    <span class="tool-icon" title="CSS3">
-                                        <svg viewBox="0 0 24 24">
-                                            <path fill="#1572B6"
-                                                d="M5,3L4.35,6.34H17.94L17.5,8.5H3.92L3.26,11.83H16.85L16.09,15.64L10.61,17.45L5.86,15.64L6.19,14H2.85L2.06,18L9.91,21L18.96,18L20.16,11.97L20.4,10.76L21.94,3H5Z" />
-                                        </svg>
-                                    </span>
-                                    <span class="tool-icon" title="JavaScript">
-                                        <svg viewBox="0 0 24 24">
-                                            <path fill="#F7DF1E"
-                                                d="M3,3H21V21H3V3M7.73,18.04C8.13,18.89 8.92,19.59 10.27,19.59C11.77,19.59 12.8,18.79 12.8,17.04V11.26H11.1V17C11.1,17.86 10.75,18.08 10.2,18.08C9.62,18.08 9.38,17.68 9.11,17.21L7.73,18.04M13.71,17.86C14.21,18.84 15.22,19.59 16.8,19.59C18.4,19.59 19.6,18.76 19.6,17.23C19.6,15.82 18.79,15.19 17.35,14.57L16.93,14.39C16.2,14.08 15.89,13.87 15.89,13.37C15.89,12.96 16.2,12.64 16.7,12.64C17.18,12.64 17.5,12.85 17.79,13.37L19.1,12.5C18.55,11.54 17.77,11.17 16.7,11.17C15.19,11.17 14.22,12.13 14.22,13.4C14.22,14.78 15.03,15.43 16.25,15.95L16.67,16.13C17.45,16.47 17.91,16.68 17.91,17.26C17.91,17.74 17.46,18.09 16.76,18.09C15.93,18.09 15.45,17.66 15.09,17.06L13.71,17.86Z" />
-                                        </svg>
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Тип:</span>
-                                <span class="detail-value">Корпоративный сайт</span>
-                            </div>
-                        </div>
-                        <a href="https://demontazh22.vercel.app" target="_blank" class="project-link">
-                            <span>Посмотреть проект</span>
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Marketplace cards -->
-                <div class="project-card" data-project="marketplace">
-                    <div class="project-img">
-                        <img alt="Marketplace" src="Images/Marketplace.webp">
-                        <div class="project-overlay">
-                            <div class="project-stats">
-                                <span class="stat-item time">
-                                    <svg viewBox="0 0 20 20">
-                                        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="2"
-                                            fill="none" />
-                                        <line x1="10" y1="10" x2="10" y2="5" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                        <line x1="10" y1="10" x2="14" y2="10" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                    </svg>
-                                    <span>8 часов</span>
-                                </span>
-                                <span class="stat-item price">
-                                    <svg viewBox="0 0 20 20">
-                                        <path d="M6 4h6a3 3 0 1 1 0 6H6m0 0v6m0-6h7m-7 3h7" stroke="currentColor"
-                                            stroke-width="2" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round" /><text x="2" y="18" font-size="0" />
-                                    </svg>
-                                    <span>1 000/шт</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-header">
-                            <h3 class="translate" data-key="project1_title">Marketplace Cards</h3>
-                            <div class="project-badges">
-                                <span class="badge badge-primary">UI Design</span>
-                                <span class="badge badge-secondary">E-commerce</span>
-                            </div>
-                        </div>
-                        <p class="translate" data-key="project1_desc">
-                            Современный редизайн карточек товаров для различных магазинов на маркетплейсах. Фокус на
-                            повышение конверсии и улучшение пользовательского опыта.
-                        </p>
-                        <div class="project-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Инструменты:</span>
-                                <span class="detail-value tools-icons">
-                                    <span class="tool-icon" title="Figma">
-                                        <svg viewBox="0 0 346 512.36">
-                                            <g fill-rule="nonzero">
-                                                <path fill="#00B6FF"
-                                                    d="M172.53 246.9c0-42.04 34.09-76.11 76.12-76.11h11.01c.3.01.63-.01.94-.01 47.16 0 85.4 38.25 85.4 85.4 0 47.15-38.24 85.39-85.4 85.39-.31 0-.64-.01-.95-.01l-11 .01c-42.03 0-76.12-34.09-76.12-76.12V246.9z" />
-                                                <path fill="#24CB71"
-                                                    d="M0 426.98c0-47.16 38.24-85.41 85.4-85.41l87.13.01v84.52c0 47.65-39.06 86.26-86.71 86.26C38.67 512.36 0 474.13 0 426.98z" />
-                                                <path fill="#FF7237"
-                                                    d="M172.53.01v170.78h87.13c.3-.01.63.01.94.01 47.16 0 85.4-38.25 85.4-85.4C346 38.24 307.76 0 260.6 0c-.31 0-.64.01-.95.01h-87.12z" />
-                                                <path fill="#FF3737"
-                                                    d="M0 85.39c0 47.16 38.24 85.4 85.4 85.4h87.13V.01H85.39C38.24.01 0 38.24 0 85.39z" />
-                                                <path fill="#874FFF"
-                                                    d="M0 256.18c0 47.16 38.24 85.4 85.4 85.4h87.13V170.8H85.39C38.24 170.8 0 209.03 0 256.18z" />
-                                            </g>
-                                        </svg>
-                                    </span>
-                                    <span class="tool-icon" title="Photoshop">
-                                        <svg viewBox="0 0 511.76 498.97">
-                                            <rect fill="#001e36" width="511.76" height="498.97" rx="90.62" />
-                                            <path fill="#31a8ff"
-                                                d="M115.24,349.91V130.53c0-1.59.68-2.4,2.06-2.4,3.65,0,7,0,12-.17s10.47-.23,16.31-.34l18.54-.35q9.78-.17,19.39-.17,26.09,0,44,6.52a76.4,76.4,0,0,1,28.66,17.51,67.06,67.06,0,0,1,15.62,24.21A80.31,80.31,0,0,1,276.61,203q0,27.48-12.7,45.32a71.82,71.82,0,0,1-34.33,25.92c-14.42,5.38-30.45,7.2-48.07,7.2-5,0-8.58-.05-10.64-.17s-5.15-.17-9.27-.17v68.49a2.72,2.72,0,0,1-2.32,3.09,2.49,2.49,0,0,1-.77,0H117.64C116,352.65,115.24,351.74,115.24,349.91ZM161.6,169.33v71.55q4.46.35,8.24.34h11.33a80.56,80.56,0,0,0,24.55-3.92A37,37,0,0,0,223.23,226q6.69-7.89,6.69-22a34.74,34.74,0,0,0-5-18.88A32,32,0,0,0,210,172.93,63.68,63.68,0,0,0,185,168.64q-8.25,0-14.59.17t-8.76.52Z" />
-                                            <path fill="#31a8ff"
-                                                d="M409.35,227.87a80,80,0,0,0-20.43-7.21,108.28,108.28,0,0,0-23.86-2.75,44.38,44.38,0,0,0-12.87,1.55,11.55,11.55,0,0,0-6.7,4.29,10.79,10.79,0,0,0-1.71,5.84,9.08,9.08,0,0,0,2.06,5.49,23.25,23.25,0,0,0,7.21,5.66,141.8,141.8,0,0,0,15.1,7,150,150,0,0,1,32.79,15.62,50,50,0,0,1,16.82,17.68,47.17,47.17,0,0,1,5,22,49.41,49.41,0,0,1-8.24,28.33,54.23,54.23,0,0,1-23.86,19.05Q375,357.3,352,357.3a140.51,140.51,0,0,1-29-2.75,92.44,92.44,0,0,1-21.8-6.87,4.44,4.44,0,0,1-2.41-4.12V306.49a2,2,0,0,1,.86-1.89,1.66,1.66,0,0,1,1.89.17A91.62,91.62,0,0,0,328,315.24a108.66,108.66,0,0,0,25.07,3.26q12,0,17.68-3.09a9.7,9.7,0,0,0,5.66-8.92q0-4.47-5.15-8.59T350.3,288a126.06,126.06,0,0,1-30.38-15.45,52.42,52.42,0,0,1-16.14-18,47.35,47.35,0,0,1-5-21.8A49.21,49.21,0,0,1,306,206.93a52.37,52.37,0,0,1,22.32-19.57q15.1-7.55,37.76-7.55a167.13,167.13,0,0,1,26.44,1.88,69.58,69.58,0,0,1,18.4,5,3.13,3.13,0,0,1,2.06,1.89,9.31,9.31,0,0,1,.34,2.57v34.68a2.3,2.3,0,0,1-1,2.06A3.33,3.33,0,0,1,409.35,227.87Z" />
-                                        </svg>
-                                    </span>
-                                    <span class="tool-icon" title="Blender">
-                                        <svg viewBox="0 0 499.77 405.98">
-                                            <path fill="#fff"
-                                                d="M196.49,225.35c1.82-32.49,17.73-61.11,41.73-81.4,23.54-19.92,55.22-32.1,89.78-32.1S394.21,124,417.77,144c24,20.29,39.89,48.91,41.73,81.37,1.82,33.38-11.6,64.39-35.14,87.37-24,23.38-58.13,38.06-96.36,38.06s-72.43-14.68-96.41-38.06C208,289.71,194.66,258.7,196.49,225.35Z" />
-                                            <path fill="#265787"
-                                                d="M260.53,228.27c.93-16.67,9.1-31.36,21.41-41.77a72.65,72.65,0,0,1,92.13,0c12.3,10.41,20.47,25.1,21.41,41.75.93,17.13-6,33-18,44.83-12.31,12-29.83,19.53-49.44,19.53s-37.16-7.53-49.47-19.53C266.45,261.29,259.59,245.38,260.53,228.27Z" />
-                                            <path fill="#ea7600"
-                                                d="M153.08,262c.11,6.52,2.19,19.2,5.31,29.1a153.58,153.58,0,0,0,33.16,57.42,171.34,171.34,0,0,0,58,41.67A189.71,189.71,0,0,0,402,389.88,172.65,172.65,0,0,0,460,348a154.79,154.79,0,0,0,33.15-57.53,145.39,145.39,0,0,0,6.24-32.11,146.87,146.87,0,0,0-1-31.9,148.49,148.49,0,0,0-21.15-57.87,161.49,161.49,0,0,0-38.58-42.53l0,0L282.5,6.2c-.14-.11-.26-.22-.41-.32-10.24-7.86-27.47-7.83-38.73,0s-12.69,21.14-2.56,29.46l0,0,65.11,53-198.46.21h-.27C90.74,88.61,75,99.37,71.85,113c-3.21,13.86,7.93,25.36,25,25.42l0,.06,100.6-.19L17.9,276l-.69.51C.28,289.52-5.2,311.08,5.47,324.73c10.82,13.87,33.84,13.9,51,.08l98-80.18A152.15,152.15,0,0,0,153.08,262ZM404.82,298.2c-20.18,20.56-48.44,32.22-79,32.28s-58.89-11.5-79.07-32a93.92,93.92,0,0,1-21.58-33.78,87.69,87.69,0,0,1-5-37.74A89.11,89.11,0,0,1,231,191.39a98,98,0,0,1,24-28.55c19.62-16,44.6-24.65,70.73-24.68s51.12,8.54,70.76,24.48a97.5,97.5,0,0,1,24,28.46,89.19,89.19,0,0,1,10.86,35.52,87.81,87.81,0,0,1-5,37.72A94.33,94.33,0,0,1,404.82,298.2Z" />
-                                        </svg>
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Тип:</span>
-                                <span class="detail-value">UI дизайн</span>
-                            </div>
-                        </div>
-                        <a href="https://www.figma.com/design/Mc3xKZVON3o3VZbopENwie/Marketplace?node-id=0-1&t=WjjPy020nhladWgh-1"
-                            target="_blank" class="project-link">
-                            <span>Посмотреть проект</span>
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Article design -->
-                <div class="project-card" data-project="article">
-                    <div class="project-img">
-                        <img alt="Article" src="Images/Article.webp">
-                        <div class="project-overlay">
-                            <div class="project-stats">
-                                <span class="stat-item time">
-                                    <svg viewBox="0 0 20 20">
-                                        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="2"
-                                            fill="none" />
-                                        <line x1="10" y1="10" x2="10" y2="5" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                        <line x1="10" y1="10" x2="14" y2="10" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                    </svg>
-                                    <span>3-5 дней</span>
-                                </span>
-                                <span class="stat-item price">
-                                    <svg viewBox="0 0 20 20">
-                                        <path d="M6 4h6a3 3 0 1 1 0 6H6m0 0v6m0-6h7m-7 3h7" stroke="currentColor"
-                                            stroke-width="2" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round" /><text x="2" y="18" font-size="0" />
-                                    </svg>
-                                    <span>10 000</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-header">
-                            <h3 class="translate" data-key="project2_title">Article Design</h3>
-                            <div class="project-badges">
-                                <span class="badge badge-primary">UI Design</span>
-                                <span class="badge badge-secondary">Editorial</span>
-                            </div>
-                        </div>
-                        <p class="translate" data-key="project2_desc">
-                            Дизайн научных статей в стиле социальных платформ. Создан для улучшения читабельности и
-                            вовлеченности читателей в научный контент.
-                        </p>
-                        <div class="project-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Инструменты:</span>
-                                <span class="detail-value tools-icons">
-                                    <span class="tool-icon" title="Figma">
-                                        <svg viewBox="0 0 346 512.36">
-                                            <g fill-rule="nonzero">
-                                                <path fill="#00B6FF"
-                                                    d="M172.53 246.9c0-42.04 34.09-76.11 76.12-76.11h11.01c.3.01.63-.01.94-.01 47.16 0 85.4 38.25 85.4 85.4 0 47.15-38.24 85.39-85.4 85.39-.31 0-.64-.01-.95-.01l-11 .01c-42.03 0-76.12-34.09-76.12-76.12V246.9z" />
-                                                <path fill="#24CB71"
-                                                    d="M0 426.98c0-47.16 38.24-85.41 85.4-85.41l87.13.01v84.52c0 47.65-39.06 86.26-86.71 86.26C38.67 512.36 0 474.13 0 426.98z" />
-                                                <path fill="#FF7237"
-                                                    d="M172.53.01v170.78h87.13c.3-.01.63.01.94.01 47.16 0 85.4-38.25 85.4-85.4C346 38.24 307.76 0 260.6 0c-.31 0-.64.01-.95.01h-87.12z" />
-                                                <path fill="#FF3737"
-                                                    d="M0 85.39c0 47.16 38.24 85.4 85.4 85.4h87.13V.01H85.39C38.24.01 0 38.24 0 85.39z" />
-                                                <path fill="#874FFF"
-                                                    d="M0 256.18c0 47.16 38.24 85.4 85.4 85.4h87.13V170.8H85.39C38.24 170.8 0 209.03 0 256.18z" />
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Тип:</span>
-                                <span class="detail-value">UI дизайн</span>
-                            </div>
-                        </div>
-                        <a href="https://www.figma.com/design/Xr32AEIkWWqwOhuT4aSc9l/TextCase?node-id=0-1&t=AKBiIysI0AMC9yhD-1"
-                            target="_blank" class="project-link">
-                            <span>Посмотреть проект</span>
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Portfolio -->
-                <div class="project-card" data-project="portfolio">
-                    <div class="project-img">
-                        <img alt="Portfolio" src="Images/Portfolio.webp">
-                        <div class="project-overlay">
-                            <div class="project-stats">
-                                <span class="stat-item time">
-                                    <svg viewBox="0 0 20 20">
-                                        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="2"
-                                            fill="none" />
-                                        <line x1="10" y1="10" x2="10" y2="5" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                        <line x1="10" y1="10" x2="14" y2="10" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                    </svg>
-                                    <span>2-3 недели</span>
-                                </span>
-                                <span class="stat-item price">
-                                    <svg viewBox="0 0 20 20">
-                                        <path d="M6 4h6a3 3 0 1 1 0 6H6m0 0v6m0-6h7m-7 3h7" stroke="currentColor"
-                                            stroke-width="2" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round" /><text x="2" y="18" font-size="0" />
-                                    </svg>
-                                    <span>Бесценно</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-header">
-                            <h3 class="translate" data-key="project3_title">Portfolio</h3>
-                            <div class="project-badges">
-                                <span class="badge badge-primary">Web Development</span>
-                                <span class="badge badge-secondary">Personal</span>
-                            </div>
-                        </div>
-                        <p class="translate" data-key="project3_desc">
-                            Персональное портфолио с современным дизайном и интерактивными элементами. Вы находитесь
-                            здесь прямо сейчас и можете оценить качество работы.
-                        </p>
-                        <div class="project-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Технологии:</span>
-                                <span class="detail-value tools-icons">
-                                    <span class="tool-icon" title="HTML5">
-                                        <svg viewBox="0 0 24 24">
-                                            <path fill="#E34F26"
-                                                d="M12,17.56L16.07,16.43L16.62,10.33H9.38L9.2,8.3H16.8L17,6.31H7L7.56,12.32H14.45L14.22,14.9L12,15.5L9.78,14.9L9.64,13.24H7.64L7.93,16.43L12,17.56M4.07,3H19.93L18.5,19.68L12,21.5L5.5,19.68L4.07,3Z" />
-                                        </svg>
-                                    </span>
-                                    <span class="tool-icon" title="CSS3">
-                                        <svg viewBox="0 0 24 24">
-                                            <path fill="#1572B6"
-                                                d="M5,3L4.35,6.34H17.94L17.5,8.5H3.92L3.26,11.83H16.85L16.09,15.64L10.61,17.45L5.86,15.64L6.19,14H2.85L2.06,18L9.91,21L18.96,18L20.16,11.97L20.4,10.76L21.94,3H5Z" />
-                                        </svg>
-                                    </span>
-                                    <span class="tool-icon" title="JavaScript">
-                                        <svg viewBox="0 0 24 24">
-                                            <path fill="#F7DF1E"
-                                                d="M3,3H21V21H3V3M7.73,18.04C8.13,18.89 8.92,19.59 10.27,19.59C11.77,19.59 12.8,18.79 12.8,17.04V11.26H11.1V17C11.1,17.86 10.75,18.08 10.2,18.08C9.62,18.08 9.38,17.68 9.11,17.21L7.73,18.04M13.71,17.86C14.21,18.84 15.22,19.59 16.8,19.59C18.4,19.59 19.6,18.76 19.6,17.23C19.6,15.82 18.79,15.19 17.35,14.57L16.93,14.39C16.2,14.08 15.89,13.87 15.89,13.37C15.89,12.96 16.2,12.64 16.7,12.64C17.18,12.64 17.5,12.85 17.79,13.37L19.1,12.5C18.55,11.54 17.77,11.17 16.7,11.17C15.19,11.17 14.22,12.13 14.22,13.4C14.22,14.78 15.03,15.43 16.25,15.95L16.67,16.13C17.45,16.47 17.91,16.68 17.91,17.26C17.91,17.74 17.46,18.09 16.76,18.09C15.93,18.09 15.45,17.66 15.09,17.06L13.71,17.86Z" />
-                                        </svg>
-                                    </span>
-                                    <span class="tool-icon" title="Three.js">
-                                        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                                            <g transform="matrix(2.25096,0,0,2.25096,256.253,256.48)">
-                                                <g transform="matrix(1,0,0,1,-113.385,-113.385)">
-                                                    <g transform="matrix(1,0,0,1,8.964,4.2527)">
-                                                        <path
-                                                            d="M63.02,200.61L19.807,25.67L193.037,75.544L63.02,200.61Z"
-                                                            style="fill:none;stroke:black;stroke-width:4px;" />
-                                                        <path
-                                                            d="M106.39,50.612L127.981,138.108L41.414,113.163L106.39,50.612Z"
-                                                            style="fill:none;stroke:black;stroke-width:4px;" />
-                                                        <path
-                                                            d="M84.91,125.03L74.186,81.565L117.194,93.911L84.91,125.03Z"
-                                                            style="fill:none;stroke:black;stroke-width:4px;" />
-                                                        <path
-                                                            d="M63.458,38.153L74.182,81.618L31.174,69.272L63.458,38.153Z"
-                                                            style="fill:none;stroke:black;stroke-width:4px;" />
-                                                        <path
-                                                            d="M149.47,62.93L160.194,106.395L117.186,94.049L149.47,62.93Z"
-                                                            style="fill:none;stroke:black;stroke-width:4px;" />
-                                                        <path
-                                                            d="M84.915,125.06L95.639,168.525L52.631,156.179L84.915,125.06Z"
-                                                            style="fill:none;stroke:black;stroke-width:4px;" />
-                                                    </g>
-                                                </g>
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Тип:</span>
-                                <span class="detail-value">Портфолио сайт</span>
-                            </div>
-                        </div>
-                        <a href="#" class="project-link">
-                            <span>Посмотреть проект</span>
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Ad for academy -->
-                <div class="project-card" data-project="ad">
-                    <div class="project-img">
-                        <img alt="Ad" src="Images/Ad.webp">
-                        <div class="project-overlay">
-                            <div class="project-stats">
-                                <span class="stat-item time">
-                                    <svg viewBox="0 0 20 20">
-                                        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="2"
-                                            fill="none" />
-                                        <line x1="10" y1="10" x2="10" y2="5" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                        <line x1="10" y1="10" x2="14" y2="10" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                    </svg>
-                                    <span>2-3 дня</span>
-                                </span>
-                                <span class="stat-item price">
-                                    <svg viewBox="0 0 20 20">
-                                        <path d="M6 4h6a3 3 0 1 1 0 6H6m0 0v6m0-6h7m-7 3h7" stroke="currentColor"
-                                            stroke-width="2" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round" /><text x="2" y="18" font-size="0" />
-                                    </svg>
-                                    <span>5 000</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-header">
-                            <h3 class="translate" data-key="project4_title">Ad for Academy</h3>
-                            <div class="project-badges">
-                                <span class="badge badge-primary">Graphic Design</span>
-                                <span class="badge badge-secondary">Advertising</span>
-                            </div>
-                        </div>
-                        <p class="translate" data-key="project4_desc">
-                            Рекламный баннер для образовательной академии. Тестовый проект, демонстрирующий навыки
-                            создания эффективной рекламной графики.
-                        </p>
-                        <div class="project-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Инструменты:</span>
-                                <span class="detail-value tools-icons">
-                                    <span class="tool-icon" title="Figma">
-                                        <svg viewBox="0 0 346 512.36">
-                                            <g fill-rule="nonzero">
-                                                <path fill="#00B6FF"
-                                                    d="M172.53 246.9c0-42.04 34.09-76.11 76.12-76.11h11.01c.3.01.63-.01.94-.01 47.16 0 85.4 38.25 85.4 85.4 0 47.15-38.24 85.39-85.4 85.39-.31 0-.64-.01-.95-.01l-11 .01c-42.03 0-76.12-34.09-76.12-76.12V246.9z" />
-                                                <path fill="#24CB71"
-                                                    d="M0 426.98c0-47.16 38.24-85.41 85.4-85.41l87.13.01v84.52c0 47.65-39.06 86.26-86.71 86.26C38.67 512.36 0 474.13 0 426.98z" />
-                                                <path fill="#FF7237"
-                                                    d="M172.53.01v170.78h87.13c.3-.01.63.01.94.01 47.16 0 85.4-38.25 85.4-85.4C346 38.24 307.76 0 260.6 0c-.31 0-.64.01-.95.01h-87.12z" />
-                                                <path fill="#FF3737"
-                                                    d="M0 85.39c0 47.16 38.24 85.4 85.4 85.4h87.13V.01H85.39C38.24.01 0 38.24 0 85.39z" />
-                                                <path fill="#874FFF"
-                                                    d="M0 256.18c0 47.16 38.24 85.4 85.4 85.4h87.13V170.8H85.39C38.24 170.8 0 209.03 0 256.18z" />
-                                            </g>
-                                        </svg>
-                                    </span>
-                                    <span class="tool-icon" title="Photoshop">
-                                        <svg viewBox="0 0 511.76 498.97">
-                                            <rect fill="#001e36" width="511.76" height="498.97" rx="90.62" />
-                                            <path fill="#31a8ff"
-                                                d="M115.24,349.91V130.53c0-1.59.68-2.4,2.06-2.4,3.65,0,7,0,12-.17s10.47-.23,16.31-.34l18.54-.35q9.78-.17,19.39-.17,26.09,0,44,6.52a76.4,76.4,0,0,1,28.66,17.51,67.06,67.06,0,0,1,15.62,24.21A80.31,80.31,0,0,1,276.61,203q0,27.48-12.7,45.32a71.82,71.82,0,0,1-34.33,25.92c-14.42,5.38-30.45,7.2-48.07,7.2-5,0-8.58-.05-10.64-.17s-5.15-.17-9.27-.17v68.49a2.72,2.72,0,0,1-2.32,3.09,2.49,2.49,0,0,1-.77,0H117.64C116,352.65,115.24,351.74,115.24,349.91ZM161.6,169.33v71.55q4.46.35,8.24.34h11.33a80.56,80.56,0,0,0,24.55-3.92A37,37,0,0,0,223.23,226q6.69-7.89,6.69-22a34.74,34.74,0,0,0-5-18.88A32,32,0,0,0,210,172.93,63.68,63.68,0,0,0,185,168.64q-8.25,0-14.59.17t-8.76.52Z" />
-                                            <path fill="#31a8ff"
-                                                d="M409.35,227.87a80,80,0,0,0-20.43-7.21,108.28,108.28,0,0,0-23.86-2.75,44.38,44.38,0,0,0-12.87,1.55,11.55,11.55,0,0,0-6.7,4.29,10.79,10.79,0,0,0-1.71,5.84,9.08,9.08,0,0,0,2.06,5.49,23.25,23.25,0,0,0,7.21,5.66,141.8,141.8,0,0,0,15.1,7,150,150,0,0,1,32.79,15.62,50,50,0,0,1,16.82,17.68,47.17,47.17,0,0,1,5,22,49.41,49.41,0,0,1-8.24,28.33,54.23,54.23,0,0,1-23.86,19.05Q375,357.3,352,357.3a140.51,140.51,0,0,1-29-2.75,92.44,92.44,0,0,1-21.8-6.87,4.44,4.44,0,0,1-2.41-4.12V306.49a2,2,0,0,1,.86-1.89,1.66,1.66,0,0,1,1.89.17A91.62,91.62,0,0,0,328,315.24a108.66,108.66,0,0,0,25.07,3.26q12,0,17.68-3.09a9.7,9.7,0,0,0,5.66-8.92q0-4.47-5.15-8.59T350.3,288a126.06,126.06,0,0,1-30.38-15.45,52.42,52.42,0,0,1-16.14-18,47.35,47.35,0,0,1-5-21.8A49.21,49.21,0,0,1,306,206.93a52.37,52.37,0,0,1,22.32-19.57q15.1-7.55,37.76-7.55a167.13,167.13,0,0,1,26.44,1.88,69.58,69.58,0,0,1,18.4,5,3.13,3.13,0,0,1,2.06,1.89,9.31,9.31,0,0,1,.34,2.57v34.68a2.3,2.3,0,0,1-1,2.06A3.33,3.33,0,0,1,409.35,227.87Z" />
-                                        </svg>
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Тип:</span>
-                                <span class="detail-value">Реклама/баннер</span>
-                            </div>
-                        </div>
-                        <a href="https://www.figma.com/design/cthCmVD9SykCXtilb2e4WN/Ad?node-id=0-1&t=XGOaR5btycjFRBik-1"
-                            target="_blank" class="project-link">
-                            <span>Посмотреть проект</span>
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Presentation for Alpha Bank -->
-                <div class="project-card" data-project="presentation">
-                    <div class="project-img">
-                        <img alt="Presentation" src="Images/Presentation.webp">
-                        <div class="project-overlay">
-                            <div class="project-stats">
-                                <span class="stat-item time">
-                                    <svg viewBox="0 0 20 20">
-                                        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="2"
-                                            fill="none" />
-                                        <line x1="10" y1="10" x2="10" y2="5" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                        <line x1="10" y1="10" x2="14" y2="10" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" />
-                                    </svg>
-                                    <span>2 дня</span>
-                                </span>
-                                <span class="stat-item price">
-                                    <svg viewBox="0 0 20 20">
-                                        <path d="M6 4h6a3 3 0 1 1 0 6H6m0 0v6m0-6h7m-7 3h7" stroke="currentColor"
-                                            stroke-width="2" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round" /><text x="2" y="18" font-size="0" />
-                                    </svg>
-                                    <span>20 000</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-header">
-                            <h3 class="translate" data-key="project5_title">Presentation for Alpha Bank</h3>
-                            <div class="project-badges">
-                                <span class="badge badge-primary">Presentation</span>
-                                <span class="badge badge-secondary">Corporate</span>
-                            </div>
-                        </div>
-                        <p class="translate" data-key="project5_desc">
-                            Презентация идеи для конкурса Альфа-Банка. Современный дизайн с акцентом на четкую структуру
-                            и визуальную привлекательность.
-                        </p>
-                        <div class="project-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Инструменты:</span>
-                                <span class="detail-value tools-icons">
-                                    <span class="tool-icon" title="Figma">
-                                        <svg viewBox="0 0 346 512.36">
-                                            <g fill-rule="nonzero">
-                                                <path fill="#00B6FF"
-                                                    d="M172.53 246.9c0-42.04 34.09-76.11 76.12-76.11h11.01c.3.01.63-.01.94-.01 47.16 0 85.4 38.25 85.4 85.4 0 47.15-38.24 85.39-85.4 85.39-.31 0-.64-.01-.95-.01l-11 .01c-42.03 0-76.12-34.09-76.12-76.12V246.9z" />
-                                                <path fill="#24CB71"
-                                                    d="M0 426.98c0-47.16 38.24-85.41 85.4-85.41l87.13.01v84.52c0 47.65-39.06 86.26-86.71 86.26C38.67 512.36 0 474.13 0 426.98z" />
-                                                <path fill="#FF7237"
-                                                    d="M172.53.01v170.78h87.13c.3-.01.63.01.94.01 47.16 0 85.4-38.25 85.4-85.4C346 38.24 307.76 0 260.6 0c-.31 0-.64.01-.95.01h-87.12z" />
-                                                <path fill="#FF3737"
-                                                    d="M0 85.39c0 47.16 38.24 85.4 85.4 85.4h87.13V.01H85.39C38.24.01 0 38.24 0 85.39z" />
-                                                <path fill="#874FFF"
-                                                    d="M0 256.18c0 47.16 38.24 85.4 85.4 85.4h87.13V170.8H85.39C38.24 170.8 0 209.03 0 256.18z" />
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Тип:</span>
-                                <span class="detail-value">Презентация</span>
-                            </div>
-                        </div>
-                        <a href="https://www.figma.com/design/PlCpfvd9NEQkyfmViulISV/Presentation?node-id=1-445&t=0D0rx5asTXFerC1z-1"
-                            target="_blank" class="project-link">
-                            <span>Посмотреть проект</span>
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-
-        <section id="process">
-            <h2 class="section-title translate fade-in-up" data-key="process"><span class="sharp">#</span>Process</h2>
-            <div class="process-steps modern-process">
-                <div class="process-step">
-                    <div class="process-header">
-                        <div class="step-icon">1</div>
-                        <h3 class="translate" data-key="brief">Brief</h3>
-                        <svg class="arrow" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                        </svg>
-                    </div>
-                    <div class="process-content">
-                        <p class="translate" data-key="brief_text">This is where we discuss project requirements, goals,
-                            and initial ideas with the client to establish a clear direction for the project.</p>
-                    </div>
-                </div>
-
-                <div class="process-step">
-                    <div class="process-header">
-                        <div class="step-icon">2</div>
-                        <h3 class="translate" data-key="analysis">Analysis</h3>
-                        <svg class="arrow" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                        </svg>
-                    </div>
-                    <div class="process-content">
-                        <p class="translate" data-key="analysis_text">Here we conduct market research, competitor
-                            analysis, and technical feasibility studies to inform our design decisions.</p>
-                    </div>
-                </div>
-
-                <div class="process-step">
-                    <div class="process-header">
-                        <div class="step-icon">3</div>
-                        <h3 class="translate" data-key="concept">Concept</h3>
-                        <svg class="arrow" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                        </svg>
-                    </div>
-                    <div class="process-content">
-                        <p class="translate" data-key="concept_text">This phase involves creating wireframes, mockups,
-                            and prototypes to visualize the final product before development begins.</p>
-                    </div>
-                </div>
-
-                <div class="process-step">
-                    <div class="process-header">
-                        <div class="step-icon">4</div>
-                        <h3 class="translate" data-key="development">Development</h3>
-                        <svg class="arrow" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                        </svg>
-                    </div>
-                    <div class="process-content">
-                        <p class="translate" data-key="development_text">The actual coding and implementation phase
-                            where we bring the design to life with clean, efficient code.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contacts">
-            <h2 class="section-title translate fade-in-up" data-key="contacts"><span class="sharp">#</span>Contacts</h2>
-
-            <div class="microsites-cta">
-                <div class="cta-content fade-in-up">
-                    <h2>Готовы к сотрудничеству?</h2>
-                    <p>Изучите мое портфолио или свяжитесь со мной для обсуждения ваших проектов</p>
-                    <div class="cta-buttons">
-                        <a href="microsites.html" class="cta-btn primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20px" height="20px">
-                                <path fill="currentColor"
-                                    d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z" />
-                            </svg>
-                            Больше проектов
-                        </a>
-                        <a href="https://t.me/stisdan" target="_blank" class="cta-btn secondary">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px">
-                                <path
-                                    d="M25,2c12.703,0,23,10.297,23,23S37.703,48,25,48S2,37.703,2,25S12.297,2,25,2z M32.934,34.375c0.423-1.298,2.405-14.234,2.65-16.783c0.074-0.772-0.17-1.285-0.648-1.514c-0.578-0.278-1.434-0.139-2.427,0.219c-1.362,0.491-18.774,7.884-19.78,8.312c-0.954,0.405-1.856,0.847-1.856,1.487c0,0.45,0.267,0.703,1.003,0.966c0.766,0.273,2.695,0.858,3.834,1.172c1.097,0.303,2.346,0.04,3.046-0.395c0.742-0.461,9.305-6.191,9.92-6.693c0.614-0.502,1.104,0.141,0.602,0.644c-0.502,0.502-6.38,6.207-7.155,6.997c-0.941,0.959-0.273,1.953,0.358,2.351c0.721,0.454,5.906,3.932,6.687,4.49c0.781,0.558,1.573,0.811,2.298,0.811C32.191,36.439,32.573,35.484,32.934,34.375z"
-                                    fill="#FFFFFF" />
-                            </svg>
-                            Связаться</a>
-                    </div>
-                </div>
-            </div>
-
-
-        </section>
+<body data-theme="hero">
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader__brand"><span class="preloader__dot">✦</span>stisdan</div>
+        <div class="preloader__count"><span id="preloaderNum">0</span>%</div>
     </div>
 
-    <footer>
-        <div class="container">
-            <p>2025. All rights reserved. Made by stisdan</p>
+    <!-- Custom cursor -->
+    <div class="cursor" id="cursor" aria-hidden="true">
+        <span class="cursor__ring"></span>
+        <span class="cursor__dot"></span>
+        <span class="cursor__label" id="cursorLabel"></span>
+    </div>
+
+    <div class="scroll-progress" id="progress" aria-hidden="true"></div>
+    <header class="site-header">
+        <a href="#top" class="brand"><span class="brand__dot">✦</span>stisdan</a>
+        <nav class="nav" aria-label="Primary">
+            <a href="#about" data-i18n="nav_about">About</a>
+            <a href="#projects" data-i18n="nav_projects">Projects</a>
+            <a href="#games" data-i18n="nav_games">Games</a>
+            <a href="#micro" data-i18n="nav_micro">Micro</a>
+            <a href="#faq" data-i18n="nav_faq">Q&amp;A</a>
+            <a href="#contact" data-i18n="nav_contact">Contact</a>
+        </nav>
+        <div class="header-tools">
+            <button class="sound-btn" id="soundBtn" type="button" aria-label="Toggle sound" aria-pressed="false">
+                <span class="sound-btn__on">♪</span><span class="sound-btn__off">✕</span>
+            </button>
+            <div class="lang-switch" role="group" aria-label="Language">
+                <button class="lang-btn is-active" data-lang="en" type="button">EN</button>
+                <span class="lang-switch__sep">/</span>
+                <button class="lang-btn" data-lang="ru" type="button">RU</button>
+            </div>
         </div>
+    </header>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero theme" data-theme-name="hero" id="top">
+        <p class="hero__eyebrow" data-i18n="hero_eyebrow">(web designer &amp; developer)</p>
+        <h1 class="hero__title">
+            <span data-i18n="hero_line1">Design,</span>
+            <span class="italic" data-i18n="hero_line2">experiments</span>
+            <span data-i18n="hero_line3">&amp; games.</span>
+        </h1>
+        <div class="hero__foot">
+            <p class="hero__lead" data-i18n="hero_lead">
+                A collection of client work, small web toys and playable projects, all in one place.
+            </p>
+            <span class="hero__scroll" data-i18n="hero_scroll">Scroll to enter ↓</span>
+        </div>
+    </section>
+
+    <!-- ============ 01 · ABOUT ============ -->
+    <section class="section about theme" data-theme-name="about" id="about">
+        <div class="wrap about-grid">
+            <div class="about-copy">
+                <div class="section__head">
+                    <span class="section__index">(01)</span>
+                    <h2 data-i18n="sec_about">About me</h2>
+                </div>
+                <p class="about-lead" data-i18n="about_text">
+                    I'm a designer and developer with 3+ years of turning messy ideas into clean, usable things.
+                    I build client websites, small web tools and a whole shelf of games, always chasing the one
+                    interaction that makes you smile.
+                </p>
+                <div class="about-stats">
+                    <div class="about-stat"><b>3+</b><span data-i18n="about_years">years of practice</span></div>
+                    <div class="about-stat"><b>15+</b><span data-i18n="about_projects">projects shipped</span></div>
+                    <div class="about-stat"><b>10</b><span data-i18n="about_games">games released</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ ZOOM: scroll into the screen ============ -->
+    <section class="zoom-pin theme" data-theme-name="hero" aria-label="Enter">
+        <div class="zoom-sticky">
+            <div class="screen">
+                <div class="screen__bezel">
+                    <div class="screen__inner">
+                        <span class="screen__label" data-i18n="screen_label">▶ selected_work.exe</span>
+                        <h2 class="screen__title" data-i18n="screen_title">Step inside</h2>
+                        <span class="screen__hint" data-i18n="screen_hint">keep scrolling →</span>
+                    </div>
+                </div>
+                <div class="screen__stand"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 01 · PROJECTS (horizontal scroll) ============ -->
+    <section class="h-pin theme" data-theme-name="projects" id="projects">
+        <div class="h-sticky">
+            <div class="h-head">
+                <span class="section__index">(02)</span>
+                <span data-i18n="sec_projects">Selected work</span>
+                <span class="h-head__hint" data-i18n="drag_hint">scroll →</span>
+            </div>
+            <div class="h-track">
+                <article class="hpanel" data-img="Images/Demontazh.webp" data-desckey="p1_desc" data-link="https://demontazh22.vercel.app">
+                    <div class="hpanel__media"><img src="Images/Demontazh.webp" alt="Demolition works site"></div>
+                    <div class="hpanel__info">
+                        <span class="hpanel__idx">01 / 06</span>
+                        <h3 class="hpanel__title" data-i18n="p1_title">Demolition works site</h3>
+                        <span class="hpanel__meta" data-i18n="p1_meta">Web · 2024</span>
+                        <span class="hpanel__open" data-i18n="open_case">Open case ↗</span>
+                    </div>
+                </article>
+                <article class="hpanel" data-img="Images/Marketplace.webp" data-desckey="p2_desc" data-link="https://www.figma.com/design/Mc3xKZVON3o3VZbopENwie/Marketplace?node-id=0-1&t=WjjPy020nhladWgh-1">
+                    <div class="hpanel__media"><img src="Images/Marketplace.webp" alt="Marketplace cards"></div>
+                    <div class="hpanel__info">
+                        <span class="hpanel__idx">02 / 06</span>
+                        <h3 class="hpanel__title" data-i18n="p2_title">Marketplace Cards</h3>
+                        <span class="hpanel__meta" data-i18n="p2_meta">Design · 2024</span>
+                        <span class="hpanel__open" data-i18n="open_case">Open case ↗</span>
+                    </div>
+                </article>
+                <article class="hpanel" data-img="Images/Article.webp" data-desckey="p3_desc" data-link="https://www.figma.com/design/Xr32AEIkWWqwOhuT4aSc9l/TextCase?node-id=0-1&t=AKBiIysI0AMC9yhD-1">
+                    <div class="hpanel__media"><img src="Images/Article.webp" alt="Article design"></div>
+                    <div class="hpanel__info">
+                        <span class="hpanel__idx">03 / 06</span>
+                        <h3 class="hpanel__title" data-i18n="p3_title">Article Design</h3>
+                        <span class="hpanel__meta" data-i18n="p3_meta">Editorial · 2023</span>
+                        <span class="hpanel__open" data-i18n="open_case">Open case ↗</span>
+                    </div>
+                </article>
+                <article class="hpanel" data-img="Images/Portfolio.webp" data-desckey="p4_desc" data-link="#">
+                    <div class="hpanel__media"><img src="Images/Portfolio.webp" alt="Portfolio"></div>
+                    <div class="hpanel__info">
+                        <span class="hpanel__idx">04 / 06</span>
+                        <h3 class="hpanel__title" data-i18n="p4_title">Portfolio</h3>
+                        <span class="hpanel__meta" data-i18n="p4_meta">Web · 2023</span>
+                        <span class="hpanel__open" data-i18n="open_case">Open case ↗</span>
+                    </div>
+                </article>
+                <article class="hpanel" data-img="Images/Ad.webp" data-desckey="p5_desc" data-link="https://www.figma.com/design/cthCmVD9SykCXtilb2e4WN/Ad?node-id=0-1&t=XGOaR5btycjFRBik-1">
+                    <div class="hpanel__media"><img src="Images/Ad.webp" alt="Ad for academy"></div>
+                    <div class="hpanel__info">
+                        <span class="hpanel__idx">05 / 06</span>
+                        <h3 class="hpanel__title" data-i18n="p5_title">Ad for Academy</h3>
+                        <span class="hpanel__meta" data-i18n="p5_meta">Ads · 2023</span>
+                        <span class="hpanel__open" data-i18n="open_case">Open case ↗</span>
+                    </div>
+                </article>
+                <article class="hpanel" data-img="Images/Presentation.webp" data-desckey="p6_desc" data-link="https://www.figma.com/design/PlCpfvd9NEQkyfmViulISV/Presentation?node-id=1-445&t=0D0rx5asTXFerC1z-1">
+                    <div class="hpanel__media"><img src="Images/Presentation.webp" alt="Presentation for Alpha Bank"></div>
+                    <div class="hpanel__info">
+                        <span class="hpanel__idx">06 / 06</span>
+                        <h3 class="hpanel__title" data-i18n="p6_title">Presentation for Alpha Bank</h3>
+                        <span class="hpanel__meta" data-i18n="p6_meta">Brand · 2022</span>
+                        <span class="hpanel__open" data-i18n="open_case">Open case ↗</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 02 · GAMES ============ -->
+    <section class="section games theme" data-theme-name="games" id="games">
+        <div class="wrap">
+            <div class="section__head">
+                <span class="section__index">(03)</span>
+                <h2 data-i18n="sec_games">Games</h2>
+                <p data-i18n="sec_games_sub">Playable projects published on itch.io.</p>
+            </div>
+            <!-- 3 featured cartridges -->
+            <div class="games-feat">
+                <a class="cart cart--feat" style="--c:#c084fc;--rot:-2deg" href="https://funbanan.itch.io/nasubi" target="_blank" rel="noopener">
+                    <span class="cart__ridge"></span>
+                    <div class="cart__label">
+                        <div class="cart__art"><img src="https://img.itch.zone/aW1nLzI4MTEzMDY5LnBuZw==/original/YjLXJ0.png" alt="NASUBI cover" loading="lazy"></div>
+                        <div class="cart__info">
+                            <div class="cart__row"><h3>NASUBI</h3><span class="game__genre">Simulation</span></div>
+                            <p class="game__desc">You took part in a controversial TV show.</p>
+                            <div class="gstats">
+                                <span class="gstat"><b>62k</b><i data-i18n="stat_views">views</i></span>
+                                <span class="gstat"><b>★ 4.6</b><i data-i18n="stat_rating">rating</i></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="cart cart--feat cart--mid" style="--c:#8b5cf6;--rot:1.5deg" href="https://st1sdan.itch.io/when-the-clock-stops" target="_blank" rel="noopener">
+                    <span class="cart__ridge"></span>
+                    <div class="cart__label">
+                        <div class="cart__art"><img src="https://img.itch.zone/aW1nLzI3MTA5MTUwLnBuZw==/original/MJPHUU.png" alt="When the Clock Stops cover" loading="lazy"></div>
+                        <div class="cart__info">
+                            <div class="cart__row"><h3>When the Clock Stops</h3><span class="game__genre">Action</span></div>
+                            <p class="game__desc">Collect, Throw, Again.</p>
+                            <div class="gstats">
+                                <span class="gstat"><b>10k</b><i data-i18n="stat_views">views</i></span>
+                                <span class="gstat"><b>★ 4.6</b><i data-i18n="stat_rating">rating</i></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="cart cart--feat" style="--c:#f59e0b;--rot:-1deg" href="https://st1sdan.itch.io/jesters-vesper" target="_blank" rel="noopener">
+                    <span class="cart__ridge"></span>
+                    <div class="cart__label">
+                        <div class="cart__art"><img src="https://img.itch.zone/aW1nLzI2ODM3NzA0LmdpZg==/original/EZcfun.gif" alt="Jester's Vesper cover" loading="lazy"></div>
+                        <div class="cart__info">
+                            <div class="cart__row"><h3>Jester's Vesper</h3><span class="game__genre">Action</span></div>
+                            <p class="game__desc">Requiem for the Moon.</p>
+                            <div class="gstats">
+                                <span class="gstat"><b>6k</b><i data-i18n="stat_views">views</i></span>
+                                <span class="gstat"><b>★ 4.7</b><i data-i18n="stat_rating">rating</i></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- the rest, scattered cartridges -->
+            <div class="games-rest">
+                <a class="cart" style="--c:#ef4444;--rot:2deg" href="https://st1sdan.itch.io/feral-hunt" target="_blank" rel="noopener">
+                    <span class="cart__ridge"></span>
+                    <div class="cart__label">
+                        <div class="cart__art"><img src="https://img.itch.zone/aW1nLzI2MTUwODYwLnBuZw==/original/HXuIIL.png" alt="Feral Hunt cover" loading="lazy"></div>
+                        <div class="cart__info">
+                            <div class="cart__row"><h4>Feral Hunt</h4><span class="gmini__rate">★ 4.4</span></div>
+                            <span class="game__genre">Card Game</span>
+                        </div>
+                    </div>
+                </a>
+                <a class="cart" style="--c:#10b981;--rot:-2.5deg" href="https://st1sdan.itch.io/vessel-of-viscera" target="_blank" rel="noopener">
+                    <span class="cart__ridge"></span>
+                    <div class="cart__label">
+                        <div class="cart__art"><img src="https://img.itch.zone/aW1nLzI1NzM0NzEwLnBuZw==/original/N7M1rW.png" alt="Vessel of Viscera cover" loading="lazy"></div>
+                        <div class="cart__info">
+                            <div class="cart__row"><h4>Vessel of Viscera</h4><span class="gmini__rate">★ 4.3</span></div>
+                            <span class="game__genre">Adventure</span>
+                        </div>
+                    </div>
+                </a>
+                <a class="cart" style="--c:#ec4899;--rot:1.5deg" href="https://st1sdan.itch.io/blossom-beneath-postjam" target="_blank" rel="noopener">
+                    <span class="cart__ridge"></span>
+                    <div class="cart__label">
+                        <div class="cart__art"><img src="https://img.itch.zone/aW1nLzI1NjcyMTkyLmdpZg==/original/G4LUab.gif" alt="Blossom Beneath cover" loading="lazy"></div>
+                        <div class="cart__info">
+                            <div class="cart__row"><h4>Blossom Beneath</h4><span class="gmini__rate">★ 4.5</span></div>
+                            <span class="game__genre">Adventure</span>
+                        </div>
+                    </div>
+                </a>
+                <a class="cart" style="--c:#38bdf8;--rot:-1.5deg" href="https://st1sdan.itch.io/apex-predator" target="_blank" rel="noopener">
+                    <span class="cart__ridge"></span>
+                    <div class="cart__label">
+                        <div class="cart__art"><img src="https://img.itch.zone/aW1nLzI1MTE4NzUzLnBuZw==/original/f%2BAqdX.png" alt="Apex Predator cover" loading="lazy"></div>
+                        <div class="cart__info">
+                            <div class="cart__row"><h4>Apex Predator</h4><span class="gmini__rate">★ 4.2</span></div>
+                            <span class="game__genre">Action</span>
+                        </div>
+                    </div>
+                </a>
+                <a class="cart" style="--c:#f97316;--rot:2.5deg" href="https://st1sdan.itch.io/clown-control" target="_blank" rel="noopener">
+                    <span class="cart__ridge"></span>
+                    <div class="cart__label">
+                        <div class="cart__art"><img src="https://img.itch.zone/aW1nLzI0OTA5MDU5LnBuZw==/original/Y%2BIyfG.png" alt="Clown Control cover" loading="lazy"></div>
+                        <div class="cart__info">
+                            <div class="cart__row"><h4>Clown Control</h4><span class="gmini__rate">★ 4.1</span></div>
+                            <span class="game__genre">Action</span>
+                        </div>
+                    </div>
+                </a>
+                <a class="cart" style="--c:#22d3ee;--rot:1deg" href="https://st1sdan.itch.io/asteroids" target="_blank" rel="noopener">
+                    <span class="cart__ridge"></span>
+                    <div class="cart__label">
+                        <div class="cart__art"><img src="https://img.itch.zone/aW1nLzE1Mjg2NjgzLnBuZw==/original/76D6%2BS.png" alt="Asteroids cover" loading="lazy"></div>
+                        <div class="cart__info">
+                            <div class="cart__row"><h4>Asteroids</h4><span class="gmini__rate">★ 4.0</span></div>
+                            <span class="game__genre">Action</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="games-cta">
+                <a href="https://st1sdan.itch.io/" target="_blank" rel="noopener" class="btn btn--primary" data-i18n="visit_itch">All games on itch.io ↗</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 03 · MICRO ============ -->
+    <section class="section micro theme" data-theme-name="micro" id="micro">
+        <div class="wrap">
+            <div class="section__head">
+                <span class="section__index">(04)</span>
+                <h2 data-i18n="sec_micro">Micro-projects</h2>
+                <p data-i18n="sec_micro_sub">Small self-contained web toys &amp; experiments.</p>
+            </div>
+            <div class="scatter">
+                <a class="chip" style="--rot:-3deg;--c:#7b3fe4" href="https://st1sdan.github.io/notepad" target="_blank" rel="noopener">
+                    <span class="chip__kind" data-i18n="kind_tool">tool</span>
+                    <span class="chip__title">Notepad</span>
+                    <span class="chip__desc" data-i18n="m1_desc">A minimal browser notepad that saves locally.</span>
+                    <span class="chip__go" data-i18n="open_link">Open ↗</span>
+                </a>
+                <a class="chip chip--tall" style="--rot:4deg;--c:#e0518a" href="https://st1sdan.github.io/game-idea-generator/" target="_blank" rel="noopener">
+                    <span class="chip__kind" data-i18n="kind_toy">toy</span>
+                    <span class="chip__title">Game Idea Generator</span>
+                    <span class="chip__desc" data-i18n="m2_desc">Random game concepts against creative block.</span>
+                    <span class="chip__go" data-i18n="open_link">Open ↗</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 04 · Q&A ============ -->
+    <section class="section faq theme" data-theme-name="faq" id="faq">
+        <div class="wrap">
+            <div class="section__head">
+                <span class="section__index">(05)</span>
+                <h2 data-i18n="sec_faq">Q&amp;A</h2>
+                <p data-i18n="sec_faq_sub">A few things people usually ask.</p>
+            </div>
+            <div class="qa-list">
+                <div class="qa">
+                    <button class="qa__q" type="button" aria-expanded="false">
+                        <span data-i18n="q1">What exactly do you do?</span>
+                        <span class="qa__mark">+</span>
+                    </button>
+                    <div class="qa__a"><p data-i18n="a1">I design and build websites, small web tools and games, from the first concept to the working product.</p></div>
+                </div>
+                <div class="qa">
+                    <button class="qa__q" type="button" aria-expanded="false">
+                        <span data-i18n="q2">Are you available for freelance?</span>
+                        <span class="qa__mark">+</span>
+                    </button>
+                    <div class="qa__a"><p data-i18n="a2">Yes. I take on freelance and collaboration, reach out through the contact section below.</p></div>
+                </div>
+                <div class="qa">
+                    <button class="qa__q" type="button" aria-expanded="false">
+                        <span data-i18n="q3">What tools do you use?</span>
+                        <span class="qa__mark">+</span>
+                    </button>
+                    <div class="qa__a"><p data-i18n="a3">Figma for design, HTML / CSS / JavaScript for the web, and Godot for games.</p></div>
+                </div>
+                <div class="qa">
+                    <button class="qa__q" type="button" aria-expanded="false">
+                        <span data-i18n="q4">Do you really make games too?</span>
+                        <span class="qa__mark">+</span>
+                    </button>
+                    <div class="qa__a"><p data-i18n="a4">I do, several are published on itch.io, including game-jam entries. See the Games section above.</p></div>
+                </div>
+                <div class="qa">
+                    <button class="qa__q" type="button" aria-expanded="false">
+                        <span data-i18n="q5">How long does a project take?</span>
+                        <span class="qa__mark">+</span>
+                    </button>
+                    <div class="qa__a"><p data-i18n="a5">It depends on scope, a landing page is days, a full product is weeks. I'll give you an honest estimate up front.</p></div>
+                </div>
+                <div class="qa">
+                    <button class="qa__q" type="button" aria-expanded="false">
+                        <span data-i18n="q6">Are you a real human?</span>
+                        <span class="qa__mark">+</span>
+                    </button>
+                    <div class="qa__a"><p data-i18n="a6">Last time I checked, yes. I also fail CAPTCHAs occasionally, which feels reassuringly human.</p></div>
+                </div>
+                <div class="qa">
+                    <button class="qa__q" type="button" aria-expanded="false">
+                        <span data-i18n="q8">Will you work for “exposure”?</span>
+                        <span class="qa__mark">+</span>
+                    </button>
+                    <div class="qa__a"><p data-i18n="a8">Exposure is great, but it doesn't pay for the coffee above. Real budgets only, please.</p></div>
+                </div>
+                <div class="qa">
+                    <button class="qa__q" type="button" aria-expanded="false">
+                        <span data-i18n="q9">Can you make it “pop” a little more?</span>
+                        <span class="qa__mark">+</span>
+                    </button>
+                    <div class="qa__a"><p data-i18n="a9">Always. There is a secret slider labelled “pop” and I am not afraid to use it.</p></div>
+                </div>
+                <div class="qa">
+                    <button class="qa__q" type="button" aria-expanded="false">
+                        <span data-i18n="q10">What's your favorite thing to build?</span>
+                        <span class="qa__mark">+</span>
+                    </button>
+                    <div class="qa__a"><p data-i18n="a10">Weird little interactions nobody asked for, the ones that make you go “oh, nice” for half a second.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 05 · CONTACT ============ -->
+    <section class="section section--contact theme" data-theme-name="contact" id="contact">
+        <div class="wrap">
+            <span class="section__index">(06)</span>
+            <h2 class="contact__big" data-i18n="sec_contact">Let's make<br>something.</h2>
+            <div class="btn-row">
+                <a href="mailto:123asdfewad@gmail.com" class="btn btn--primary" data-i18n="email_me">Email me</a>
+                <a href="https://t.me/stisdan" target="_blank" rel="noopener" class="btn btn--ghost" data-i18n="telegram">Telegram</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <span>© <span id="year"></span> stisdan</span>
+        <span data-i18n="footer_note">Made with care.</span>
     </footer>
+
+    <!-- ============ Project modal ============ -->
+    <div class="modal" id="modal" hidden>
+        <div class="modal__backdrop" data-close></div>
+        <div class="modal__panel" role="dialog" aria-modal="true">
+            <button class="modal__close" data-close aria-label="Close">✕</button>
+            <div class="modal__media"><img id="modalImg" src="" alt=""></div>
+            <div class="modal__body">
+                <h3 id="modalTitle"></h3>
+                <p id="modalDesc"></p>
+                <div class="modal__stats">
+                    <div class="modal__stat">
+                        <span class="modal__stat-label" data-i18n="label_time">Time</span>
+                        <b id="modalTime"></b>
+                    </div>
+                    <div class="modal__stat">
+                        <span class="modal__stat-label" data-i18n="label_price">Budget</span>
+                        <b id="modalPrice"></b>
+                    </div>
+                </div>
+                <a id="modalLink" class="btn btn--primary" href="#" data-i18n="visit_project">Visit project ↗</a>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
